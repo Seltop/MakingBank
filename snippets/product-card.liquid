@@ -14,28 +14,30 @@
 -%}
 
 <article class="product-card" data-product-id="{{ product.id }}">
-  <a href="{{ product.url | within: collection }}" class="product-card__media-wrap" aria-label="{{ product.title | escape }}">
-    {% render 'product-badges', product: product %}
-    {%- if featured -%}
-      <img
-        class="product-card__media--primary"
-        src="{{ featured | image_url: width: 600 }}"
-        alt="{{ featured.alt | default: product.title | escape }}"
-        loading="lazy" width="600" height="600">
-    {%- else -%}
-      {{ 'product-1' | placeholder_svg_tag: 'product-card__media--primary' }}
-    {%- endif -%}
-    {%- if second -%}
-      <img
-        class="product-card__media--alt"
-        src="{{ second | image_url: width: 600 }}"
-        alt="{{ second.alt | default: product.title | escape }}"
-        loading="lazy" width="600" height="600">
-    {%- endif -%}
+  <div class="product-card__media-wrap">
+    <a href="{{ product.url | within: collection }}" class="product-card__media-link" aria-label="{{ product.title | escape }}">
+      {% render 'product-badges', product: product %}
+      {%- if featured -%}
+        <img
+          class="product-card__media--primary"
+          src="{{ featured | image_url: width: 600 }}"
+          alt="{{ featured.alt | default: product.title | escape }}"
+          loading="lazy" width="600" height="600">
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'product-card__media--primary' }}
+      {%- endif -%}
+      {%- if second -%}
+        <img
+          class="product-card__media--alt"
+          src="{{ second | image_url: width: 600 }}"
+          alt="{{ second.alt | default: product.title | escape }}"
+          loading="lazy" width="600" height="600">
+      {%- endif -%}
+    </a>
 
     {%- if show_quick_add and product.available -%}
       {%- if product.variants.size > 1 -%}
-        <span class="btn btn--secondary btn--sm product-card__quick">View options</span>
+        <a href="{{ product.url | within: collection }}" class="btn btn--secondary btn--sm product-card__quick">View options</a>
       {%- else -%}
         <button type="button"
           class="btn btn--primary btn--sm btn--full product-card__quick"
@@ -45,7 +47,7 @@
         </button>
       {%- endif -%}
     {%- endif -%}
-  </a>
+  </div>
 
   <div class="product-card__info">
     {%- if show_vendor and product.vendor != blank -%}

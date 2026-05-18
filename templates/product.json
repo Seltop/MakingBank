@@ -1,7 +1,14 @@
 {
   "sections": {
     "main": { "type": "main-product" },
-    "recommendations": { "type": "product-recommendations" }
+    "recommendations": { "type": "product-recommendations" },
+    "reviews": {
+      "type": "customer-reviews",
+      "settings": {
+        "eyebrow": "Customer reviews",
+        "heading": "Real feedback from daily wear"
+      }
+    }
   },
-  "order": ["main", "recommendations"]
+  "order": ["main", "recommendations", "reviews"]
 }

@@ -1,5 +1,5 @@
 /* =========================================================
-   PULSE — Wearable Tech theme JS
+   PULSE - Wearable Tech theme JS
    Global UI behaviours (header, mobile nav, filters, etc.)
    ========================================================= */
 

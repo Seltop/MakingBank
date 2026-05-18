@@ -1,8 +1,27 @@
 {%- comment -%}
-  Renders Shopify Storefront filters via collection.filters
+  Renders category links and Shopify Storefront filters.
   Uses standard GET form so filters work without JS.
 {%- endcomment -%}
 <form method="get" class="filters">
+  {%- if collection.sort_by != blank -%}
+    <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+  {%- endif -%}
+
+  <fieldset class="filter-group">
+    <legend class="filter-group__title">Category</legend>
+    <div class="filter-group__options">
+      <a href="{{ routes.all_products_collection_url }}" {% if collection.handle == 'all' %}class="is-active" aria-current="page"{% endif %}>All products</a>
+      {%- assign category_handles = 'smart-rings,smart-watches,fitness-trackers,accessories' | split: ',' -%}
+      {%- for handle in category_handles -%}
+        {%- assign category_collection = collections[handle] -%}
+        {%- assign fallback_title = handle | replace: '-', ' ' | capitalize -%}
+        <a href="{% if category_collection != blank %}{{ category_collection.url }}{% else %}/collections/{{ handle }}{% endif %}" {% if collection.handle == handle %}class="is-active" aria-current="page"{% endif %}>
+          {{ category_collection.title | default: fallback_title }}
+        </a>
+      {%- endfor -%}
+    </div>
+  </fieldset>
+
   {%- if collection.filters != blank -%}
     {%- for filter in collection.filters -%}
       <fieldset class="filter-group">
@@ -33,7 +52,7 @@
       <legend class="filter-group__title">Price</legend>
       <div class="filter-group__options">
         <a href="{{ collection.url }}?filter.v.price.lte=100">Under $100</a>
-        <a href="{{ collection.url }}?filter.v.price.gte=100&filter.v.price.lte=300">$100 – $300</a>
+        <a href="{{ collection.url }}?filter.v.price.gte=100&filter.v.price.lte=300">$100 - $300</a>
         <a href="{{ collection.url }}?filter.v.price.gte=300">$300+</a>
       </div>
     </fieldset>

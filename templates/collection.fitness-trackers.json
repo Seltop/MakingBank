@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": { "type": "main-collection" },
+    "benefits": {
+      "type": "benefits",
+      "settings": {
+        "eyebrow": "Fitness trackers",
+        "heading": "Built for training, recovery, and everyday movement"
+      }
+    },
+    "trust": { "type": "trust-badges" }
+  },
+  "order": ["main", "benefits", "trust"]
+}

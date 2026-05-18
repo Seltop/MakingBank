@@ -2,8 +2,17 @@
   assign current_variant = product.selected_or_first_available_variant
   assign is_ring = false
   assign tags = product.tags | join: ',' | downcase
-  if tags contains 'ring' or product.type contains 'Ring'
+  assign product_type_downcase = product.type | downcase
+  if tags contains 'ring' or product_type_downcase contains 'ring'
     assign is_ring = true
+  endif
+  assign rating_value = section.settings.review_rating
+  assign rating_count = section.settings.review_count
+  if product.metafields.reviews.rating.value != blank
+    assign rating_value = product.metafields.reviews.rating.value.rating
+  endif
+  if product.metafields.reviews.rating_count != blank
+    assign rating_count = product.metafields.reviews.rating_count
   endif
 -%}
 
@@ -42,10 +51,12 @@
         {%- endif -%}
         <h1 class="product__title">{{ product.title }}</h1>
 
-        <div class="product__rating">
-          <span class="stars">★★★★★</span>
-          <span>4.8 · 1,247 reviews</span>
-        </div>
+        {%- if section.settings.show_review_summary -%}
+          <div class="product__rating">
+            <span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span>{{ rating_value }} {{ section.settings.review_label }}{% if rating_count != blank %} &middot; {{ rating_count }} reviews{% endif %}</span>
+          </div>
+        {%- endif -%}
 
         <div class="product__price">
           <span data-product-price>{{ current_variant.price | money }}</span>
@@ -93,7 +104,7 @@
 
           <div class="product__actions">
             <div class="quantity">
-              <button type="button" data-qty-change="-1" aria-label="Decrease">−</button>
+              <button type="button" data-qty-change="-1" aria-label="Decrease">-</button>
               <input type="number" name="quantity" value="1" min="1" aria-label="Quantity">
               <button type="button" data-qty-change="1" aria-label="Increase">+</button>
             </div>
@@ -111,6 +122,7 @@
               name="checkout"
               class="btn btn--secondary btn--lg btn--full product__buy-now"
               data-buy-now
+              data-default-text="Buy it now"
               formaction="/checkout"
               {% unless current_variant.available %}disabled{% endunless %}>
               Buy it now
@@ -192,6 +204,10 @@
 {
   "name": "Product",
   "settings": [
+    { "type": "checkbox", "id": "show_review_summary", "label": "Show review summary", "default": true },
+    { "type": "text", "id": "review_rating", "label": "Fallback review rating", "default": "4.8" },
+    { "type": "text", "id": "review_label", "label": "Review rating label", "default": "out of 5" },
+    { "type": "text", "id": "review_count", "label": "Fallback review count", "default": "1,247" },
     { "type": "checkbox", "id": "show_buy_now", "label": "Show Buy it now button", "default": true }
   ],
   "blocks": [

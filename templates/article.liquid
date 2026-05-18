@@ -5,7 +5,7 @@
       <h1 style="margin-top: 12px;">{{ article.title }}</h1>
       <div class="text-muted" style="margin-bottom: 24px; font-size: 14px;">
         {{ article.published_at | date: '%B %d, %Y' }}
-        {%- if article.author != blank %} · By {{ article.author }}{%- endif %}
+        {%- if article.author != blank %} &middot; By {{ article.author }}{%- endif %}
       </div>
 
       {%- if article.image -%}
@@ -29,7 +29,7 @@
         {%- for comment in article.comments -%}
           <div style="border-bottom: 1px solid var(--color-border); padding: 16px 0;">
             <strong>{{ comment.author }}</strong>
-            <span class="text-muted" style="font-size: 13px;"> · {{ comment.created_at | date: '%b %d, %Y' }}</span>
+            <span class="text-muted" style="font-size: 13px;"> &middot; {{ comment.created_at | date: '%b %d, %Y' }}</span>
             <div>{{ comment.content }}</div>
           </div>
         {%- endfor -%}

@@ -18,9 +18,9 @@
       {%- for block in section.blocks -%}
         <div class="comparison__row" {{ block.shopify_attributes }}>
           <div><strong>{{ block.settings.feature }}</strong></div>
-          <div>{% if block.settings.col_1 == 'yes' %}<span class="comparison__check">✓</span>{% elsif block.settings.col_1 == 'no' %}<span class="comparison__dash">—</span>{% else %}{{ block.settings.col_1_text }}{% endif %}</div>
-          <div>{% if block.settings.col_2 == 'yes' %}<span class="comparison__check">✓</span>{% elsif block.settings.col_2 == 'no' %}<span class="comparison__dash">—</span>{% else %}{{ block.settings.col_2_text }}{% endif %}</div>
-          <div>{% if block.settings.col_3 == 'yes' %}<span class="comparison__check">✓</span>{% elsif block.settings.col_3 == 'no' %}<span class="comparison__dash">—</span>{% else %}{{ block.settings.col_3_text }}{% endif %}</div>
+          <div>{% if block.settings.col_1 == 'yes' %}<span class="comparison__check">&#10003;</span>{% elsif block.settings.col_1 == 'no' %}<span class="comparison__dash">&mdash;</span>{% else %}{{ block.settings.col_1_text }}{% endif %}</div>
+          <div>{% if block.settings.col_2 == 'yes' %}<span class="comparison__check">&#10003;</span>{% elsif block.settings.col_2 == 'no' %}<span class="comparison__dash">&mdash;</span>{% else %}{{ block.settings.col_2_text }}{% endif %}</div>
+          <div>{% if block.settings.col_3 == 'yes' %}<span class="comparison__check">&#10003;</span>{% elsif block.settings.col_3 == 'no' %}<span class="comparison__dash">&mdash;</span>{% else %}{{ block.settings.col_3_text }}{% endif %}</div>
         </div>
       {%- endfor -%}
     </div>

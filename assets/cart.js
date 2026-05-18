@@ -1,5 +1,5 @@
 /* =========================================================
-   PULSE — Cart functionality (AJAX cart drawer)
+   PULSE - Cart functionality (AJAX cart drawer)
    ========================================================= */
 
 (function () {
@@ -80,7 +80,8 @@
   }
 
   /* ---------- Add to cart ---------- */
-  function addToCart(formData, button) {
+  function addToCart(formData, button, options) {
+    options = options || {};
     if (button) { button.classList.add('is-loading'); button.disabled = true; }
     return fetch(routes.cart_add_url + '.js', {
       method: 'POST',
@@ -94,8 +95,12 @@
       })
       .then(function () { return fetchCart(); })
       .then(function (cart) {
-        renderDrawer(cart);
         updateCartCount(cart);
+        if (options.checkout) {
+          window.location.href = '/checkout';
+          return;
+        }
+        renderDrawer(cart);
         openDrawer();
         if (button) {
           button.classList.remove('is-loading');
@@ -140,8 +145,10 @@
       if (!form) return;
       e.preventDefault();
       var fd = new FormData(form);
-      var btn = form.querySelector('[data-add-to-cart]') || form.querySelector('button[type="submit"]');
-      addToCart(fd, btn);
+      var submitter = e.submitter || document.activeElement;
+      var isBuyNow = submitter && submitter.closest && submitter.closest('[data-buy-now]');
+      var btn = isBuyNow ? submitter : form.querySelector('[data-add-to-cart]') || form.querySelector('button[type="submit"]');
+      addToCart(fd, btn, { checkout: !!isBuyNow });
     });
 
     document.addEventListener('click', function (e) {

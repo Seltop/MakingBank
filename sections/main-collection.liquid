@@ -16,7 +16,7 @@
       </button>
       <select data-collection-sort aria-label="Sort by">
         {%- assign sort_options = 'manual,best-selling,title-ascending,price-ascending,price-descending,created-descending' | split: ',' -%}
-        {%- assign sort_labels = 'Featured,Best selling,A–Z,Price: low to high,Price: high to low,Newest' | split: ',' -%}
+        {%- assign sort_labels = 'Featured,Best selling,A-Z,Price: low to high,Price: high to low,Newest' | split: ',' -%}
         {%- for opt in sort_options -%}
           <option value="{{ opt }}" {% if collection.sort_by == opt or collection.default_sort_by == opt and collection.sort_by == blank %}selected{% endif %}>{{ sort_labels[forloop.index0] }}</option>
         {%- endfor -%}

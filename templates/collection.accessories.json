@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": { "type": "main-collection" },
+    "support": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "Accessories",
+        "heading": "Chargers, straps, sizing kits, and protection",
+        "content": "<p>Keep every wearable charged, fitted, protected, and ready for daily tracking.</p>",
+        "alignment": "center"
+      }
+    }
+  },
+  "order": ["main", "support"]
+}

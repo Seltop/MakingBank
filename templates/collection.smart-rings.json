@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": { "type": "main-collection" },
+    "ring-fit": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "Smart rings",
+        "heading": "Low-profile tracking for sleep, recovery, and readiness",
+        "content": "<p>Use this collection for titanium smart rings, sizing kits, ring chargers, and finger-based health monitoring accessories.</p>",
+        "alignment": "center",
+        "cta_text": "View size guide",
+        "cta_link": "/pages/size-guide"
+      }
+    },
+    "trust": { "type": "trust-badges" }
+  },
+  "order": ["main", "ring-fit", "trust"]
+}

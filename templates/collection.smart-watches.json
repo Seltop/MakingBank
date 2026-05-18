@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "main": { "type": "main-collection" },
+    "connectivity": { "type": "app-connectivity" },
+    "trust": { "type": "trust-badges" }
+  },
+  "order": ["main", "connectivity", "trust"]
+}

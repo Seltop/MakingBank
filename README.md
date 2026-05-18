@@ -86,10 +86,21 @@ Create these pages and assign the matching theme template:
 | Reviews | `reviews` | `reviews` |
 | Technology / How it works | `technology` | `technology` |
 | Shipping & returns | `shipping-returns` | `shipping-returns` |
-| Privacy policy | default | `privacy-policy` |
-| Terms of service | default | `terms-of-service` |
+| Privacy policy | `privacy-policy` | `privacy-policy` |
+| Terms of service | `terms-of-service` | `terms-of-service` |
 
 Shopify can generate policy pages under Settings > Policies, so privacy and terms can also live under `/policies/...`.
+
+### Collection Templates
+
+Assign these optional collection templates for category-specific merchandising:
+
+| Collection | Template suffix | Recommended handle |
+| --- | --- | --- |
+| Smart Rings | `smart-rings` | `smart-rings` |
+| Smart Watches | `smart-watches` | `smart-watches` |
+| Fitness Trackers | `fitness-trackers` | `fitness-trackers` |
+| Accessories | `accessories` | `accessories` |
 
 ### Navigation
 
@@ -119,13 +130,94 @@ Setting a compare-at price higher than the price shows a Sale badge.
 
 ```text
 wearable-tech-theme/
-├── assets/
-├── config/
-├── layout/
-├── locales/
-├── sections/
-├── snippets/
-└── templates/
+  assets/
+    cart.js
+    theme.css
+    theme.js
+  config/
+    settings_data.json
+    settings_schema.json
+  layout/
+    password.liquid
+    theme.liquid
+  locales/
+    en.default.json
+  sections/
+    announcement-bar.liquid
+    app-connectivity.liquid
+    benefits.liquid
+    best-sellers.liquid
+    cart-drawer.liquid
+    comparison.liquid
+    customer-reviews.liquid
+    faq-preview.liquid
+    featured-collections.liquid
+    final-cta.liquid
+    footer-group.json
+    footer.liquid
+    header-group.json
+    header.liquid
+    hero.liquid
+    image-with-text.liquid
+    lifestyle-image.liquid
+    main-cart.liquid
+    main-collection.liquid
+    main-contact.liquid
+    main-faq.liquid
+    main-page.liquid
+    main-product.liquid
+    main-reviews.liquid
+    main-size-guide.liquid
+    main-technology.liquid
+    product-recommendations.liquid
+    rich-text.liquid
+    track-health.liquid
+    trust-badges.liquid
+  snippets/
+    collection-filters.liquid
+    icon.liquid
+    meta-tags.liquid
+    pagination.liquid
+    price.liquid
+    product-badges.liquid
+    product-card.liquid
+  templates/
+    404.liquid
+    article.liquid
+    blog.liquid
+    cart.json
+    collection.accessories.json
+    collection.fitness-trackers.json
+    collection.json
+    collection.smart-rings.json
+    collection.smart-watches.json
+    customers/
+      account.liquid
+      activate_account.liquid
+      addresses.liquid
+      login.liquid
+      order.liquid
+      register.liquid
+      reset_password.liquid
+    index.json
+    list-collections.liquid
+    page.about.json
+    page.contact.json
+    page.faq.json
+    page.json
+    page.privacy-policy.json
+    page.reviews.json
+    page.shipping-returns.json
+    page.size-guide.json
+    page.technology.json
+    page.terms-of-service.json
+    page.terms.json
+    password.liquid
+    product.json
+    search.liquid
+  package.json
+  README.md
+  shopify.theme.toml.example
 ```
 
 ## Notes
