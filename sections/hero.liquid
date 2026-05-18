@@ -4,6 +4,21 @@
       <img src="{{ section.settings.image | image_url: width: 2400 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" loading="eager" width="2400" height="{{ 2400 | divided_by: section.settings.image.aspect_ratio | round }}">
       <div class="hero__overlay"></div>
     </div>
+  {%- else -%}
+    <div class="hero__visual" aria-hidden="true">
+      <div class="hero__watch">
+        <span class="hero__watch-screen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </div>
+      <div class="hero__ring"></div>
+      <div class="hero__tracker">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
   {%- endif -%}
 
   <div class="container">
@@ -48,7 +63,7 @@
     { "type": "image_picker", "id": "image", "label": "Background image" },
     { "type": "color", "id": "bg_color", "label": "Fallback color", "default": "#0B1220" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Wearable Tech, Reimagined" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Track your health. Optimize your life." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Pulse wearable technology for every body." },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Smart rings, watches, and fitness trackers engineered for sleep, recovery, and performance - beautifully designed for everyday wear." },
     { "type": "text", "id": "cta_text", "label": "Primary button", "default": "Shop wearables" },
     { "type": "url", "id": "cta_link", "label": "Primary button link" },
