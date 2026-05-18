@@ -1,17 +1,18 @@
 <section class="section">
   <div class="container">
-    <div class="lifestyle">
+    <div class="lifestyle{% if section.settings.image == blank %} lifestyle--fallback{% endif %}">
       {%- if section.settings.image != blank -%}
         <img src="{{ section.settings.image | image_url: width: 2400 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy" width="2400" height="{{ 2400 | divided_by: section.settings.image.aspect_ratio | round }}">
       {%- else -%}
-        {{ 'lifestyle-1' | placeholder_svg_tag }}
+        <span class="lifestyle__grain" aria-hidden="true"></span>
+        <img class="lifestyle__ring" src="{{ 'pulse-ring-gold.png' | asset_url }}" alt="" loading="lazy" width="700" height="700">
       {%- endif -%}
       <div class="lifestyle__content">
-        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" style="color: rgba(255,255,255,0.7);">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow eyebrow--on-dark">{{ section.settings.eyebrow }}</span>{%- endif -%}
         <h2>{{ section.settings.heading }}</h2>
-        {%- if section.settings.body != blank -%}<p style="color: rgba(255,255,255,0.85);">{{ section.settings.body }}</p>{%- endif -%}
+        {%- if section.settings.body != blank -%}<p class="lifestyle__body">{{ section.settings.body }}</p>{%- endif -%}
         {%- if section.settings.cta_text != blank -%}
-          <a href="{{ section.settings.cta_link }}" class="btn btn--primary" style="background:#fff; color:#0B1220">{{ section.settings.cta_text }} {% render 'icon', name: 'arrow-right', size: 14 %}</a>
+          <a href="{{ section.settings.cta_link }}" class="btn btn--primary">{{ section.settings.cta_text }} {% render 'icon', name: 'arrow-right', size: 14 %}</a>
         {%- endif -%}
       </div>
     </div>
@@ -24,9 +25,9 @@
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Designed for life" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Wear it everywhere - meetings, marathons, mornings." },
-    { "type": "textarea", "id": "body", "label": "Body", "default": "Premium materials. Featherlight comfort. A wearable you forget is there until you need it." },
-    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Shop collection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Wear it everywhere — meetings, marathons, mornings." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Aerospace-grade titanium. 4 grams. 100m water-resistant. Engineered to disappear on your finger until it has something to tell you." },
+    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Shop the ring" },
     { "type": "url", "id": "cta_link", "label": "CTA link" }
   ],
   "presets": [{ "name": "Lifestyle image" }]

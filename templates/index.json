@@ -15,11 +15,43 @@
       "settings": { "eyebrow": "Best Sellers", "heading": "Most-loved wearables", "product_count": 8 }
     },
     "track-health": { "type": "track-health" },
-    "benefits": { "type": "benefits" },
-    "comparison": { "type": "comparison" },
+    "benefits": {
+      "type": "benefits",
+      "blocks": {
+        "sleep":      { "type": "benefit", "settings": { "icon": "sleep",     "title": "Sleep stages",       "text": "REM, deep & light sleep with personalized insights." } },
+        "hr":         { "type": "benefit", "settings": { "icon": "pulse",     "title": "Heart rate",         "text": "24/7 HR & HRV monitoring with anomaly alerts." } },
+        "fitness":    { "type": "benefit", "settings": { "icon": "activity",  "title": "Fitness",            "text": "Activity, VO2 Max, and workout intensity zones." } },
+        "recovery":   { "type": "benefit", "settings": { "icon": "recovery",  "title": "Recovery",           "text": "Daily recovery score based on your physiology." } },
+        "stress":     { "type": "benefit", "settings": { "icon": "stress",    "title": "Stress",             "text": "Track stress with HRV-based readings." } },
+        "battery":    { "type": "benefit", "settings": { "icon": "battery",   "title": "7-day battery",      "text": "All-day wear without the daily charge." } },
+        "water":      { "type": "benefit", "settings": { "icon": "water",     "title": "Waterproof",         "text": "10 ATM rated — swim, shower, dive." } },
+        "bluetooth":  { "type": "benefit", "settings": { "icon": "bluetooth", "title": "Always connected",   "text": "Bluetooth 5.3 sync with iOS & Android." } }
+      },
+      "block_order": ["sleep", "hr", "fitness", "recovery", "stress", "battery", "water", "bluetooth"]
+    },
+    "comparison": {
+      "type": "comparison",
+      "blocks": {
+        "design":   { "type": "row", "settings": { "feature": "Discreet design",          "col_1": "yes", "col_2": "no",  "col_3": "custom", "col_3_text": "Slim band" } },
+        "sleep":    { "type": "row", "settings": { "feature": "Sleep tracking",           "col_1": "yes", "col_2": "yes", "col_3": "yes" } },
+        "display":  { "type": "row", "settings": { "feature": "Display & notifications",  "col_1": "no",  "col_2": "yes", "col_3": "yes" } },
+        "gps":      { "type": "row", "settings": { "feature": "GPS workouts",             "col_1": "no",  "col_2": "yes", "col_3": "custom", "col_3_text": "Phone-tethered" } },
+        "battery":  { "type": "row", "settings": { "feature": "Battery life",             "col_1": "custom", "col_1_text": "7 days", "col_2": "custom", "col_2_text": "2 days", "col_3": "custom", "col_3_text": "10 days" } },
+        "water":    { "type": "row", "settings": { "feature": "Water resistance",         "col_1": "custom", "col_1_text": "100m",   "col_2": "custom", "col_2_text": "50m",    "col_3": "custom", "col_3_text": "50m" } }
+      },
+      "block_order": ["design", "sleep", "display", "gps", "battery", "water"]
+    },
     "app-connectivity": { "type": "app-connectivity" },
     "lifestyle-image": { "type": "lifestyle-image" },
-    "customer-reviews": { "type": "customer-reviews" },
+    "customer-reviews": {
+      "type": "customer-reviews",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "rating": 5, "review": "The sleep tracking is unreal. I'm finally waking up rested for the first time in years.",              "author": "Jamie L.",  "product": "Pulse Ring — Gold" } },
+        "r2": { "type": "review", "settings": { "rating": 5, "review": "Battery lasts a full week. The app is gorgeous. Worth every penny.",                                    "author": "Marcus R.", "product": "Pulse Ring — Onyx" } },
+        "r3": { "type": "review", "settings": { "rating": 5, "review": "I've worn it through every workout, every shower, every ocean swim. It just disappears on your finger.", "author": "Priya K.",  "product": "Pulse Ring — Silver" } }
+      },
+      "block_order": ["r1", "r2", "r3"]
+    },
     "trust-badges": { "type": "trust-badges" },
     "faq-preview": { "type": "faq-preview" },
     "final-cta": { "type": "final-cta" }
