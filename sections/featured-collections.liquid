@@ -1,4 +1,9 @@
-<section class="section">
+{%- liquid
+  assign default_finishes = 'pulse-ring-gold.png,pulse-ring-silver.png,pulse-ring-black.png' | split: ','
+  assign default_labels = 'Gold,Silver,Onyx' | split: ','
+  assign default_subtitles = '18k titanium PVD,Brushed aerospace ti,Stealth matte coating' | split: ','
+-%}
+<section class="section section--soft">
   <div class="container">
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="section-header">
@@ -10,21 +15,31 @@
       </div>
     {%- endif -%}
 
-    <div class="featured-collections">
+    <div class="finish-picker">
       {%- for block in section.blocks -%}
         {%- assign coll = collections[block.settings.collection] -%}
-        <a href="{{ coll.url | default: '#' }}" class="featured-card" {{ block.shopify_attributes }}>
-          {%- if block.settings.image != blank -%}
-            <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title | default: coll.title }}" loading="lazy" width="800" height="{{ 800 | divided_by: block.settings.image.aspect_ratio | round }}">
-          {%- elsif coll.featured_image != blank -%}
-            <img src="{{ coll.featured_image | image_url: width: 800 }}" alt="{{ coll.title }}" loading="lazy" width="800" height="{{ 800 | divided_by: coll.featured_image.aspect_ratio | round }}">
-          {%- else -%}
-            {{ 'collection-1' | placeholder_svg_tag }}
-          {%- endif -%}
-          <div class="featured-card__overlay"></div>
-          <div class="featured-card__content">
-            <h3 class="featured-card__title">{{ block.settings.title | default: coll.title }}</h3>
-            <span class="featured-card__arrow">{% render 'icon', name: 'arrow-right', size: 16 %}</span>
+        {%- assign idx = forloop.index0 -%}
+        {%- assign fallback_img = default_finishes[idx] -%}
+        {%- assign fallback_label = default_labels[idx] | default: block.settings.title -%}
+        {%- assign fallback_sub = default_subtitles[idx] -%}
+        <a href="{{ coll.url | default: '#' }}" class="finish-card" {{ block.shopify_attributes }}>
+          <div class="finish-card__media">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title | default: coll.title }}" loading="lazy" width="800" height="{{ 800 | divided_by: block.settings.image.aspect_ratio | round }}">
+            {%- elsif coll.featured_image != blank -%}
+              <img src="{{ coll.featured_image | image_url: width: 800 }}" alt="{{ coll.title }}" loading="lazy" width="800" height="{{ 800 | divided_by: coll.featured_image.aspect_ratio | round }}">
+            {%- elsif fallback_img != blank -%}
+              <img src="{{ fallback_img | asset_url }}" alt="Pulse Ring — {{ fallback_label }}" loading="lazy" width="600" height="600">
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {%- endif -%}
+          </div>
+          <div class="finish-card__meta">
+            <span class="finish-card__label">{{ block.settings.title | default: coll.title | default: fallback_label }}</span>
+            {%- if fallback_sub != blank and block.settings.image == blank and coll.featured_image == blank -%}
+              <span class="finish-card__sub">{{ fallback_sub }}</span>
+            {%- endif -%}
+            <span class="finish-card__arrow">{% render 'icon', name: 'arrow-right', size: 14 %}</span>
           </div>
         </a>
       {%- endfor -%}
@@ -37,9 +52,9 @@
   "name": "Featured collections",
   "max_blocks": 8,
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop the line" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Find your wearable" },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Rings, watches, and trackers - choose the form factor that fits your lifestyle." }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Three finishes, one ring" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Choose your finish." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Same sensor stack. Same 7-day battery. Three ways to wear it." }
   ],
   "blocks": [
     {
@@ -54,7 +69,7 @@
   ],
   "default": {
     "blocks": [
-      { "type": "collection" }, { "type": "collection" }, { "type": "collection" }, { "type": "collection" }
+      { "type": "collection" }, { "type": "collection" }, { "type": "collection" }
     ]
   }
 }

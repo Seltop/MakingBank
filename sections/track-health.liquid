@@ -1,11 +1,17 @@
 <section class="section">
   <div class="container">
     <div class="track-health">
-      <div class="track-health__media">
+      <div class="track-health__media track-health__media--ring">
         {%- if section.settings.image != blank -%}
           <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy" width="1200" height="{{ 1200 | divided_by: section.settings.image.aspect_ratio | round }}">
         {%- else -%}
-          {{ 'lifestyle-1' | placeholder_svg_tag }}
+          <span class="track-health__glow" aria-hidden="true"></span>
+          <img class="track-health__ring" src="{{ 'pulse-ring-silver.png' | asset_url }}" alt="Pulse Ring product detail" loading="lazy" width="900" height="900">
+          <div class="track-health__hud" aria-hidden="true">
+            <div class="track-health__hud-row"><span>HRV</span><strong>72<small>ms</small></strong></div>
+            <div class="track-health__hud-row"><span>SpO₂</span><strong>98<small>%</small></strong></div>
+            <div class="track-health__hud-row"><span>Recovery</span><strong>91</strong></div>
+          </div>
         {%- endif -%}
       </div>
       <div>

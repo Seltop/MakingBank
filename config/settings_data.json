@@ -1,11 +1,11 @@
 {
   "current": {
-    "color_background": "#FAFAF7",
-    "color_surface": "#F2EFE8",
-    "color_card": "#FFFFFF",
-    "color_text": "#0A0B0F",
-    "color_muted": "#6B6B73",
-    "color_border": "#E5E2DC",
+    "color_background": "#F1ECE0",
+    "color_surface": "#E7E0CE",
+    "color_card": "#FBF8F1",
+    "color_text": "#15151A",
+    "color_muted": "#6C6C73",
+    "color_border": "#D9D2C0",
     "color_accent": "#FF4A1C",
     "color_accent_contrast": "#FFFFFF",
     "type_heading_font": "playfair_display_n7",
@@ -18,16 +18,16 @@
   },
   "presets": {
     "Default": {
-      "color_background": "#FAFAF7",
-      "color_surface": "#F2EFE8",
-      "color_text": "#0A0B0F",
+      "color_background": "#F1ECE0",
+      "color_surface": "#E7E0CE",
+      "color_text": "#15151A",
       "color_accent": "#FF4A1C"
     },
     "Midnight": {
-      "color_background": "#0A0B0F",
-      "color_surface": "#15171D",
-      "color_card": "#1B1E26",
-      "color_text": "#FAFAF7",
+      "color_background": "#0E0F14",
+      "color_surface": "#16181F",
+      "color_card": "#1C1F27",
+      "color_text": "#F1ECE0",
       "color_muted": "#9CA0AB",
       "color_border": "#2A2D36",
       "color_accent": "#FF4A1C",

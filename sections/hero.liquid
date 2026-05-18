@@ -5,26 +5,34 @@
       <div class="hero__overlay"></div>
     </div>
   {%- else -%}
-    <div class="hero__visual" aria-hidden="true">
-      <div class="hero__watch">
-        <span class="hero__watch-screen">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
-      </div>
-      <div class="hero__ring"></div>
-      <div class="hero__tracker">
-        <span></span>
-        <span></span>
-      </div>
+    <div class="hero__visual hero__visual--rings" aria-hidden="true"></div>
+    <div class="hero__ring-stage" aria-hidden="true">
+      <span class="hero__ring-glow"></span>
+      <img
+        class="hero__ring-photo hero__ring-photo--silver"
+        src="{{ 'pulse-ring-silver.png' | asset_url }}"
+        alt=""
+        loading="eager"
+        width="900" height="900">
+      <img
+        class="hero__ring-photo hero__ring-photo--black"
+        src="{{ 'pulse-ring-black.png' | asset_url }}"
+        alt=""
+        loading="eager"
+        width="900" height="900">
+      <img
+        class="hero__ring-photo hero__ring-photo--gold"
+        src="{{ 'pulse-ring-gold.png' | asset_url }}"
+        alt="Pulse smart ring in gold finish"
+        loading="eager"
+        width="900" height="900">
     </div>
   {%- endif -%}
 
   <div class="container">
     <div class="hero__content">
       {%- if section.settings.eyebrow != blank -%}
-        <span class="eyebrow" style="color: rgba(255,255,255,0.75);">{{ section.settings.eyebrow }}</span>
+        <span class="eyebrow eyebrow--accent">{{ section.settings.eyebrow }}</span>
       {%- endif -%}
       <h1 class="hero__title">{{ section.settings.heading }}</h1>
       {%- if section.settings.subheading != blank -%}
@@ -32,13 +40,13 @@
       {%- endif -%}
       <div class="hero__actions">
         {%- if section.settings.cta_text != blank -%}
-          <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--lg" style="background:#fff;color:#0B1220">
+          <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--lg">
             {{ section.settings.cta_text }}
             {% render 'icon', name: 'arrow-right', size: 16 %}
           </a>
         {%- endif -%}
         {%- if section.settings.cta2_text != blank -%}
-          <a href="{{ section.settings.cta2_link }}" class="btn btn--outline btn--lg" style="border-color: rgba(255,255,255,0.4); color:#fff">{{ section.settings.cta2_text }}</a>
+          <a href="{{ section.settings.cta2_link }}" class="btn btn--outline btn--lg hero__cta-outline">{{ section.settings.cta2_text }}</a>
         {%- endif -%}
       </div>
 
@@ -54,6 +62,8 @@
       {%- endif -%}
     </div>
   </div>
+
+  <div class="hero__fade" aria-hidden="true"></div>
 </section>
 
 {% schema %}
@@ -62,10 +72,10 @@
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Background image" },
     { "type": "color", "id": "bg_color", "label": "Fallback color", "default": "#0B1220" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Wearable Tech, Reimagined" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Pulse wearable technology for every body." },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Smart rings, watches, and fitness trackers engineered for sleep, recovery, and performance - beautifully designed for everyday wear." },
-    { "type": "text", "id": "cta_text", "label": "Primary button", "default": "Shop wearables" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Pulse Ring — Generation 3" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Health intelligence, in a ring you'll forget you're wearing." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Sleep. Recovery. Heart rate. Skin temperature. The lightest titanium ring on the market — engineered for 7 days of continuous insight." },
+    { "type": "text", "id": "cta_text", "label": "Primary button", "default": "Shop the Pulse Ring" },
     { "type": "url", "id": "cta_link", "label": "Primary button link" },
     { "type": "text", "id": "cta2_text", "label": "Secondary button", "default": "How it works" },
     { "type": "url", "id": "cta2_link", "label": "Secondary button link" }
@@ -97,7 +107,7 @@
       { "type": "feature", "settings": { "icon": "pulse", "text": "24/7 heart rate" } },
       { "type": "feature", "settings": { "icon": "sleep", "text": "Sleep tracking" } },
       { "type": "feature", "settings": { "icon": "battery", "text": "7-day battery" } },
-      { "type": "feature", "settings": { "icon": "water", "text": "Waterproof 10ATM" } }
+      { "type": "feature", "settings": { "icon": "water", "text": "Waterproof 100m" } }
     ]
   }
 }

@@ -2,6 +2,10 @@
   assign collection_handle = section.settings.collection
   assign coll = collections[collection_handle]
   assign limit = section.settings.product_count | default: 8
+  assign ring_imgs = 'pulse-ring-gold.png,pulse-ring-silver.png,pulse-ring-black.png,pulse-ring-gold.png' | split: ','
+  assign ring_titles = 'Pulse Ring — Gold,Pulse Ring — Silver,Pulse Ring — Onyx,Pulse Ring — Limited Edition' | split: ','
+  assign ring_vendors = 'Pulse,Pulse,Pulse,Pulse' | split: ','
+  assign ring_prices = '$349,$329,$329,$429' | split: ','
 -%}
 <section class="section section--soft">
   <div class="container">
@@ -22,12 +26,32 @@
           {% render 'product-card', product: product, show_vendor: section.settings.show_vendor %}
         {%- endfor -%}
       {%- else -%}
-        {%- for i in (1..4) -%}
+        {%- for i in (0..3) -%}
+          {%- assign img = ring_imgs[i] -%}
+          {%- assign title = ring_titles[i] -%}
+          {%- assign price = ring_prices[i] -%}
+          {%- assign vendor = ring_vendors[i] -%}
           <article class="product-card">
-            <div class="product-card__media-wrap">{{ 'product-' | append: i | placeholder_svg_tag }}</div>
+            <div class="product-card__media-wrap product-card__media-wrap--ring">
+              <a href="#" class="product-card__media-link" aria-label="{{ title }}"></a>
+              {%- if i == 3 -%}
+                <div class="product-card__badges">
+                  <span class="badge badge--new">New</span>
+                </div>
+              {%- endif -%}
+              <img class="product-card__media--primary" src="{{ img | asset_url }}" alt="{{ title }}" loading="lazy" width="600" height="600">
+            </div>
             <div class="product-card__info">
-              <h3 class="product-card__title">Example product {{ i }}</h3>
-              <span class="product-card__price">$199.00</span>
+              {%- if section.settings.show_vendor -%}
+                <span class="product-card__vendor">{{ vendor }}</span>
+              {%- endif -%}
+              <h3 class="product-card__title"><a href="#">{{ title }}</a></h3>
+              <span class="product-card__price">{{ price }}</span>
+              <div class="product-card__swatches" aria-label="Available finishes">
+                <span class="swatch" style="background:#D4AF37" title="Gold"></span>
+                <span class="swatch" style="background:#C0C4C9" title="Silver"></span>
+                <span class="swatch" style="background:#0A0B0F" title="Onyx"></span>
+              </div>
             </div>
           </article>
         {%- endfor -%}
@@ -45,7 +69,7 @@
     { "type": "textarea", "id": "subheading", "label": "Subheading" },
     { "type": "collection", "id": "collection", "label": "Collection" },
     { "type": "range", "id": "product_count", "min": 4, "max": 16, "step": 4, "label": "Number of products", "default": 8 },
-    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false }
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": true }
   ],
   "presets": [{ "name": "Product grid" }]
 }

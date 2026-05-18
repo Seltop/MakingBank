@@ -4,12 +4,11 @@
     "featured-collections": {
       "type": "featured-collections",
       "blocks": {
-        "rings": { "type": "collection", "settings": { "title": "Smart Rings" } },
-        "watches": { "type": "collection", "settings": { "title": "Smart Watches" } },
-        "trackers": { "type": "collection", "settings": { "title": "Fitness Trackers" } },
-        "accessories": { "type": "collection", "settings": { "title": "Accessories" } }
+        "gold": { "type": "collection", "settings": { "title": "Gold" } },
+        "silver": { "type": "collection", "settings": { "title": "Silver" } },
+        "onyx": { "type": "collection", "settings": { "title": "Onyx" } }
       },
-      "block_order": ["rings", "watches", "trackers", "accessories"]
+      "block_order": ["gold", "silver", "onyx"]
     },
     "best-sellers": {
       "type": "best-sellers",
