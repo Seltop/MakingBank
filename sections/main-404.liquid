@@ -1,10 +1,50 @@
-<section class="section">
-  <div class="container" style="text-align:center; padding: 100px 20px;">
-    <span class="eyebrow">404</span>
-    <h1>Page not found</h1>
-    <p class="text-muted" style="max-width: 480px; margin: 0 auto 24px;">The page you were looking for has moved or doesn't exist.</p>
-    <a href="{{ routes.root_url }}" class="btn btn--primary">Back to home</a>
-    <a href="{{ routes.all_products_collection_url }}" class="btn btn--outline" style="margin-left: 8px;">Shop all</a>
+<section class="error-page">
+  <span class="error-page__num" aria-hidden="true">404</span>
+
+  <div class="container error-page__inner">
+    <span class="eyebrow eyebrow--accent eyebrow--solo">Signal lost</span>
+    <h1 class="error-page__title">This page is off the grid.</h1>
+    <p class="error-page__copy">The page you were looking for has moved or doesn't exist. Try searching the store, or pick a destination below.</p>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="error-page__search">
+      <label for="error-search" class="visually-hidden">Search</label>
+      <input id="error-search" type="search" name="q" placeholder="Search rings, watches, accessories…" autocomplete="off">
+      <button type="submit" class="btn btn--primary">
+        {% render 'icon', name: 'search', size: 16 %}
+        <span>Search</span>
+      </button>
+    </form>
+
+    <div class="error-page__links">
+      <a href="{{ routes.root_url }}" class="error-page__link">
+        <div>
+          <span class="error-page__link-title">Home</span>
+          <span class="error-page__link-meta">Start fresh</span>
+        </div>
+        {% render 'icon', name: 'arrow-up-right', size: 18 %}
+      </a>
+      <a href="{{ routes.all_products_collection_url }}" class="error-page__link">
+        <div>
+          <span class="error-page__link-title">Shop all</span>
+          <span class="error-page__link-meta">Every Pulse product</span>
+        </div>
+        {% render 'icon', name: 'arrow-up-right', size: 18 %}
+      </a>
+      <a href="/collections/smart-rings" class="error-page__link">
+        <div>
+          <span class="error-page__link-title">Smart rings</span>
+          <span class="error-page__link-meta">Pulse signature</span>
+        </div>
+        {% render 'icon', name: 'arrow-up-right', size: 18 %}
+      </a>
+      <a href="/pages/faq" class="error-page__link">
+        <div>
+          <span class="error-page__link-title">Help center</span>
+          <span class="error-page__link-meta">FAQs &amp; support</span>
+        </div>
+        {% render 'icon', name: 'arrow-up-right', size: 18 %}
+      </a>
+    </div>
   </div>
 </section>
 

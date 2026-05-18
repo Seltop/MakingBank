@@ -63,6 +63,22 @@
           <span class="price--compare" data-product-compare {% unless current_variant.compare_at_price > current_variant.price %}style="display:none"{% endunless %}>
             {{ current_variant.compare_at_price | money }}
           </span>
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            {%- assign save_amount = current_variant.compare_at_price | minus: current_variant.price -%}
+            <span class="product__save" data-product-save>Save {{ save_amount | money }}</span>
+          {%- endif -%}
+        </div>
+
+        <div class="product__stock" data-product-stock>
+          {%- if current_variant.available -%}
+            {%- if current_variant.inventory_management != blank and current_variant.inventory_policy == 'deny' and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= 10 -%}
+              <span class="product__stock-dot product__stock-dot--low"></span> Only {{ current_variant.inventory_quantity }} left in stock
+            {%- else -%}
+              <span class="product__stock-dot"></span> In stock · Ships in 1–2 business days
+            {%- endif -%}
+          {%- else -%}
+            <span class="product__stock-dot product__stock-dot--out"></span> Sold out
+          {%- endif -%}
         </div>
 
         {%- if product.description != blank -%}
@@ -151,13 +167,29 @@
           <div>{% render 'icon', name: 'shield', size: 18 %} 2-year warranty</div>
         </div>
 
+        {%- if current_variant.sku != blank or section.settings.show_share -%}
+          <div class="product__meta-row">
+            {%- if current_variant.sku != blank -%}
+              <span class="product__sku" data-product-sku>SKU: {{ current_variant.sku }}</span>
+            {%- endif -%}
+            {%- if section.settings.show_share -%}
+              <div class="product__share">
+                <span>Share</span>
+                <a href="https://www.facebook.com/sharer.php?u={{ shop.url }}{{ product.url }}" target="_blank" rel="noopener" aria-label="Share on Facebook">{% render 'icon', name: 'facebook', size: 16 %}</a>
+                <a href="https://twitter.com/intent/tweet?url={{ shop.url }}{{ product.url }}&text={{ product.title | url_encode }}" target="_blank" rel="noopener" aria-label="Share on X">{% render 'icon', name: 'x', size: 16 %}</a>
+                <a href="mailto:?subject={{ product.title | url_encode }}&body={{ shop.url }}{{ product.url }}" aria-label="Share by email">{% render 'icon', name: 'mail', size: 16 %}</a>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
         {%- comment -%} Accordion blocks {%- endcomment -%}
         <div class="accordion">
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when 'description' -%}
-                <details {{ block.shopify_attributes }} open>
-                  <summary>Description {% render 'icon', name: 'plus', size: 18 %}</summary>
+                <details {{ block.shopify_attributes }}>
+                  <summary>Full description {% render 'icon', name: 'plus', size: 18 %}</summary>
                   <div class="accordion__content">{{ product.description }}</div>
                 </details>
               {%- when 'specs' -%}
@@ -208,7 +240,8 @@
     { "type": "text", "id": "review_rating", "label": "Fallback review rating", "default": "4.8" },
     { "type": "text", "id": "review_label", "label": "Review rating label", "default": "out of 5" },
     { "type": "text", "id": "review_count", "label": "Fallback review count", "default": "1,247" },
-    { "type": "checkbox", "id": "show_buy_now", "label": "Show Buy it now button", "default": true }
+    { "type": "checkbox", "id": "show_buy_now", "label": "Show Buy it now button", "default": true },
+    { "type": "checkbox", "id": "show_share", "label": "Show social share row", "default": true }
   ],
   "blocks": [
     {
@@ -291,7 +324,6 @@
       { "type": "feature", "settings": { "icon": "water", "title": "10 ATM", "text": "Waterproof" } },
       { "type": "feature", "settings": { "icon": "pulse", "title": "24/7", "text": "Heart rate" } },
       { "type": "feature", "settings": { "icon": "sleep", "title": "Smart", "text": "Sleep tracking" } },
-      { "type": "description" },
       { "type": "specs" },
       { "type": "in_the_box" },
       { "type": "shipping" }
