@@ -188,6 +188,21 @@
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
+  /* ---------- Sticky header shadow on scroll ---------- */
+  function bindHeaderScroll() {
+    var header = document.querySelector('.header');
+    if (!header) return;
+    var ticking = false;
+    function update() {
+      header.classList.toggle('is-scrolled', window.scrollY > 8);
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  }
+
   /* ---------- Init ---------- */
   document.addEventListener('DOMContentLoaded', function () {
     bindToggles();
@@ -195,5 +210,6 @@
     bindVariants();
     bindQuantity();
     bindSort();
+    bindHeaderScroll();
   });
 })();
