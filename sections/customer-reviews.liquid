@@ -1,0 +1,57 @@
+<section class="section">
+  <div class="container">
+    <div class="section-header" style="justify-content: center;">
+      <div class="section-header__text" style="text-align:center; margin: 0 auto;">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+      {%- for block in section.blocks -%}
+        <div class="review-card" {{ block.shopify_attributes }}>
+          <div class="review-card__stars" aria-label="{{ block.settings.rating }} out of 5">
+            {%- for i in (1..5) -%}
+              {%- if i <= block.settings.rating -%}&#9733;{%- else -%}<span style="color:#E5E7EB;">&#9733;</span>{%- endif -%}
+            {%- endfor -%}
+          </div>
+          <p>"{{ block.settings.review }}"</p>
+          <div class="review-card__author">&mdash; {{ block.settings.author }}{% if block.settings.product %}, {{ block.settings.product }}{% endif %}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reviews carousel",
+  "max_blocks": 9,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Loved by thousands" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What customers are saying" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Rating", "default": 5 },
+        { "type": "textarea", "id": "review", "label": "Review", "default": "The sleep tracking is unreal. I'm waking up actually rested for the first time in years." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Jamie L." },
+        { "type": "text", "id": "product", "label": "Product (optional)" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "review", "settings": { "review": "The sleep tracking is unreal. I'm finally waking up rested.", "author": "Jamie L.", "product": "Pulse Ring" } },
+      { "type": "review", "settings": { "review": "Battery lasts a full week. The app is gorgeous. Worth every penny.", "author": "Marcus R.", "product": "Pulse Watch" } },
+      { "type": "review", "settings": { "review": "I've worn it through every workout, shower, and ocean swim. Indestructible.", "author": "Priya K.", "product": "Pulse Tracker" } }
+    ]
+  },
+  "presets": [{ "name": "Reviews carousel" }]
+}
+{% endschema %}

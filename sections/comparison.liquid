@@ -1,0 +1,68 @@
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-header" style="justify-content: center;">
+      <div class="section-header__text" style="text-align:center; margin: 0 auto;">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+      </div>
+    </div>
+
+    <div class="comparison">
+      <div class="comparison__row comparison__row--head">
+        <div>Feature</div>
+        <div>{{ section.settings.col_1 }}</div>
+        <div>{{ section.settings.col_2 }}</div>
+        <div>{{ section.settings.col_3 }}</div>
+      </div>
+      {%- for block in section.blocks -%}
+        <div class="comparison__row" {{ block.shopify_attributes }}>
+          <div><strong>{{ block.settings.feature }}</strong></div>
+          <div>{% if block.settings.col_1 == 'yes' %}<span class="comparison__check">✓</span>{% elsif block.settings.col_1 == 'no' %}<span class="comparison__dash">—</span>{% else %}{{ block.settings.col_1_text }}{% endif %}</div>
+          <div>{% if block.settings.col_2 == 'yes' %}<span class="comparison__check">✓</span>{% elsif block.settings.col_2 == 'no' %}<span class="comparison__dash">—</span>{% else %}{{ block.settings.col_2_text }}{% endif %}</div>
+          <div>{% if block.settings.col_3 == 'yes' %}<span class="comparison__check">✓</span>{% elsif block.settings.col_3 == 'no' %}<span class="comparison__dash">—</span>{% else %}{{ block.settings.col_3_text }}{% endif %}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparison table",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Compare" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Rings vs Watches vs Trackers" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Different form factors, different superpowers. Find the wearable that fits your life." },
+    { "type": "text", "id": "col_1", "label": "Column 1", "default": "Smart Ring" },
+    { "type": "text", "id": "col_2", "label": "Column 2", "default": "Smart Watch" },
+    { "type": "text", "id": "col_3", "label": "Column 3", "default": "Fitness Tracker" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Comparison row",
+      "settings": [
+        { "type": "text", "id": "feature", "label": "Feature", "default": "Sleep tracking" },
+        { "type": "select", "id": "col_1", "options": [{"value":"yes","label":"Yes"},{"value":"no","label":"No"},{"value":"custom","label":"Custom text"}], "default": "yes", "label": "Col 1" },
+        { "type": "text", "id": "col_1_text", "label": "Col 1 text" },
+        { "type": "select", "id": "col_2", "options": [{"value":"yes","label":"Yes"},{"value":"no","label":"No"},{"value":"custom","label":"Custom text"}], "default": "yes", "label": "Col 2" },
+        { "type": "text", "id": "col_2_text", "label": "Col 2 text" },
+        { "type": "select", "id": "col_3", "options": [{"value":"yes","label":"Yes"},{"value":"no","label":"No"},{"value":"custom","label":"Custom text"}], "default": "yes", "label": "Col 3" },
+        { "type": "text", "id": "col_3_text", "label": "Col 3 text" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "row", "settings": { "feature": "Discreet design", "col_1": "yes", "col_2": "no", "col_3": "custom", "col_3_text": "Slim band" } },
+      { "type": "row", "settings": { "feature": "Sleep tracking", "col_1": "yes", "col_2": "yes", "col_3": "yes" } },
+      { "type": "row", "settings": { "feature": "Display & notifications", "col_1": "no", "col_2": "yes", "col_3": "yes" } },
+      { "type": "row", "settings": { "feature": "GPS workouts", "col_1": "no", "col_2": "yes", "col_3": "custom", "col_3_text": "Phone-tethered" } },
+      { "type": "row", "settings": { "feature": "Battery life", "col_1": "custom", "col_1_text": "7 days", "col_2": "custom", "col_2_text": "2 days", "col_3": "custom", "col_3_text": "10 days" } },
+      { "type": "row", "settings": { "feature": "Water resistance", "col_1": "custom", "col_1_text": "100m", "col_2": "custom", "col_2_text": "50m", "col_3": "custom", "col_3_text": "50m" } }
+    ]
+  },
+  "presets": [{ "name": "Comparison table" }]
+}
+{% endschema %}

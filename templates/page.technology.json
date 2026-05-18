@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": { "type": "main-technology" },
+    "benefits": { "type": "benefits" },
+    "comparison": { "type": "comparison" },
+    "final-cta": { "type": "final-cta" }
+  },
+  "order": ["main", "benefits", "comparison", "final-cta"]
+}

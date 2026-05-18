@@ -1,0 +1,41 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="announcement" role="region" aria-label="Announcements">
+    <div class="announcement__inner container">
+      {%- for block in section.blocks -%}
+        <span class="announcement__slide" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+          {%- else -%}
+            {{ block.settings.text }}
+          {%- endif -%}
+        </span>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "max_blocks": 6,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping on orders over $99" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "message", "settings": { "text": "Free shipping on orders over $99" } },
+      { "type": "message", "settings": { "text": "30-day risk-free trial" } },
+      { "type": "message", "settings": { "text": "2-year warranty" } }
+    ]
+  },
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

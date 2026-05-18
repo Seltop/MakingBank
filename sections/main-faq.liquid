@@ -1,0 +1,59 @@
+<section>
+  <div class="page-hero container">
+    <h1>{{ section.settings.heading | default: 'Frequently asked questions' }}</h1>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+
+  <div class="container" style="padding-bottom: 80px;">
+    {%- assign current_category = '' -%}
+    <div class="faq" style="max-width: 820px;">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.category != current_category and block.settings.category != blank -%}
+          {%- assign current_category = block.settings.category -%}
+          <h3 style="margin: 40px 0 12px;">{{ current_category }}</h3>
+        {%- endif -%}
+        <details class="faq__item" {{ block.shopify_attributes }}>
+          <summary class="faq__question">
+            {{ block.settings.question }}
+            {% render 'icon', name: 'plus', size: 18 %}
+          </summary>
+          <div class="faq__answer">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ page",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked questions" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Everything you need to know about Pulse wearables, the app, and our policies." }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "category", "label": "Category (optional)", "default": "Products" },
+        { "type": "text", "id": "question", "label": "Question", "default": "How accurate is the sleep tracking?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Our wearables use multi-sensor fusion to detect sleep stages with >90% accuracy compared to clinical polysomnography.</p>" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "faq", "settings": { "category": "Products", "question": "Which wearable is right for me?", "answer": "<p>Choose a ring for discreet 24/7 wear, a watch for full visual data and notifications, or a tracker for ultra-long battery and lightweight workouts.</p>" } },
+      { "type": "faq", "settings": { "category": "Products", "question": "How accurate is sleep tracking?", "answer": "<p>>90% accuracy vs. clinical polysomnography.</p>" } },
+      { "type": "faq", "settings": { "category": "Products", "question": "How long does the battery last?", "answer": "<p>Ring: 7 days. Watch: 2 days. Tracker: 10 days.</p>" } },
+      { "type": "faq", "settings": { "category": "App", "question": "What devices does the app work on?", "answer": "<p>iOS 14+ and Android 9+.</p>" } },
+      { "type": "faq", "settings": { "category": "App", "question": "Does it work with Apple Health and Google Fit?", "answer": "<p>Yes — full two-way sync with both, plus Strava integration.</p>" } },
+      { "type": "faq", "settings": { "category": "Shipping", "question": "How long does shipping take?", "answer": "<p>Most orders ship in 2-3 business days. Domestic delivery 3-5 business days. International 7-14 days.</p>" } },
+      { "type": "faq", "settings": { "category": "Shipping", "question": "Do you ship internationally?", "answer": "<p>Yes, we ship to 40+ countries.</p>" } },
+      { "type": "faq", "settings": { "category": "Returns", "question": "What's your return policy?", "answer": "<p>30-day risk-free trial. If you're not satisfied, return for a full refund.</p>" } },
+      { "type": "faq", "settings": { "category": "Returns", "question": "Is there a warranty?", "answer": "<p>Yes, every Pulse wearable comes with a 2-year limited warranty.</p>" } }
+    ]
+  }
+}
+{% endschema %}

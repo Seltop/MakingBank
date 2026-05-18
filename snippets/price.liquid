@@ -1,0 +1,25 @@
+{%- comment -%}
+  Renders the price for a product or variant.
+  Accepts: product (object), use_variant (bool) — uses selected_or_first_available_variant
+{%- endcomment -%}
+{%- liquid
+  if use_variant and product
+    assign target = product.selected_or_first_available_variant
+  else
+    assign target = product
+  endif
+
+  assign on_sale = false
+  if target.compare_at_price and target.compare_at_price > target.price
+    assign on_sale = true
+  endif
+-%}
+
+<span class="product-card__price">
+  {%- if on_sale -%}
+    <span class="price--sale">{{ target.price | money }}</span>
+    <span class="price--compare">{{ target.compare_at_price | money }}</span>
+  {%- else -%}
+    <span>{{ target.price | money }}</span>
+  {%- endif -%}
+</span>

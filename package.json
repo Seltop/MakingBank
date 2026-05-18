@@ -1,0 +1,19 @@
+{
+  "name": "pulse-wearable-tech-shopify-theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shopify Liquid theme for premium wearable technology brands.",
+  "scripts": {
+    "shopify": "shopify",
+    "dev": "shopify theme dev",
+    "check": "shopify theme check",
+    "package": "shopify theme package",
+    "push": "shopify theme push",
+    "pull": "shopify theme pull",
+    "info": "shopify theme info",
+    "list": "shopify theme list"
+  },
+  "devDependencies": {
+    "@shopify/cli": "^3.94.3"
+  }
+}

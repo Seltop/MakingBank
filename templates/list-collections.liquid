@@ -1,0 +1,27 @@
+<section class="section">
+  <div class="container">
+    <div class="page-hero" style="padding: 0 0 32px;">
+      <h1>Shop all</h1>
+      <p class="text-muted">Browse every collection in our wearable tech lineup.</p>
+    </div>
+
+    <div class="featured-collections">
+      {%- for coll in collections -%}
+        {%- if coll.handle != 'frontpage' -%}
+          <a href="{{ coll.url }}" class="featured-card">
+            {%- if coll.featured_image -%}
+              <img src="{{ coll.featured_image | image_url: width: 800 }}" alt="{{ coll.title }}" loading="lazy" width="800" height="{{ 800 | divided_by: coll.featured_image.aspect_ratio | round }}">
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {%- endif -%}
+            <div class="featured-card__overlay"></div>
+            <div class="featured-card__content">
+              <h3 class="featured-card__title">{{ coll.title }}</h3>
+              <span class="featured-card__arrow">{% render 'icon', name: 'arrow-right', size: 16 %}</span>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>

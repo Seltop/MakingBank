@@ -1,0 +1,69 @@
+<section class="section">
+  <div class="container">
+    <div class="section-header text-center" style="justify-content: center;">
+      <div class="section-header__text" style="text-align:center; margin: 0 auto;">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+      </div>
+    </div>
+
+    <div class="benefits-grid">
+      {%- for block in section.blocks -%}
+        <div class="benefit-card" {{ block.shopify_attributes }}>
+          <div class="benefit-card__icon">{% render 'icon', name: block.settings.icon, size: 22 %}</div>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefits",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why Pulse" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Built for the things that matter" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Every metric, every insight, every day — engineered to help you sleep better, train smarter, and feel your best." }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "sleep", "label": "Sleep" },
+            { "value": "pulse", "label": "Heart" },
+            { "value": "activity", "label": "Activity" },
+            { "value": "recovery", "label": "Recovery" },
+            { "value": "stress", "label": "Stress" },
+            { "value": "battery", "label": "Battery" },
+            { "value": "water", "label": "Waterproof" },
+            { "value": "bluetooth", "label": "Bluetooth" }
+          ],
+          "default": "sleep"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Sleep tracking" },
+        { "type": "text", "id": "text", "label": "Text", "default": "REM, deep, and light sleep stages with personalized recommendations." }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "benefit", "settings": { "icon": "sleep", "title": "Sleep stages", "text": "REM, deep & light sleep with personalized insights." } },
+      { "type": "benefit", "settings": { "icon": "pulse", "title": "Heart rate", "text": "24/7 HR & HRV monitoring with anomaly alerts." } },
+      { "type": "benefit", "settings": { "icon": "activity", "title": "Fitness", "text": "Activity, VO2 Max, and workout intensity zones." } },
+      { "type": "benefit", "settings": { "icon": "recovery", "title": "Recovery", "text": "Daily recovery score based on your physiology." } },
+      { "type": "benefit", "settings": { "icon": "stress", "title": "Stress", "text": "Track stress with HRV-based readings." } },
+      { "type": "benefit", "settings": { "icon": "battery", "title": "7-day battery", "text": "All-day wear without the daily charge." } },
+      { "type": "benefit", "settings": { "icon": "water", "title": "Waterproof", "text": "10 ATM rated — swim, shower, dive." } },
+      { "type": "benefit", "settings": { "icon": "bluetooth", "title": "Always connected", "text": "Bluetooth 5.3 sync with iOS & Android." } }
+    ]
+  },
+  "presets": [{ "name": "Benefits" }]
+}
+{% endschema %}

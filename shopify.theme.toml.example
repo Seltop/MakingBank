@@ -1,0 +1,5 @@
+[environments.default]
+store = "your-store.myshopify.com"
+
+# Optional: uncomment this only if you use a Theme Access password or custom app token.
+# password = "shptka_..."

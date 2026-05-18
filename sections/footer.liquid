@@ -1,0 +1,94 @@
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url: width: 320 }}" alt="{{ shop.name | escape }}" width="320" height="{{ 320 | divided_by: settings.logo.aspect_ratio | round }}" style="max-width: 140px; margin-bottom: 12px; filter: invert(1);">
+        {%- else -%}
+          <h3 style="color:#fff; margin-bottom: 12px;">{{ shop.name }}</h3>
+        {%- endif -%}
+        <p>{{ section.settings.tagline }}</p>
+        <div class="footer__socials">
+          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" aria-label="Instagram" target="_blank" rel="noopener">{% render 'icon', name: 'instagram', size: 16 %}</a>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" aria-label="TikTok" target="_blank" rel="noopener">{% render 'icon', name: 'tiktok', size: 16 %}</a>{%- endif -%}
+          {%- if settings.social_youtube != blank -%}<a href="{{ settings.social_youtube }}" aria-label="YouTube" target="_blank" rel="noopener">{% render 'icon', name: 'youtube', size: 16 %}</a>{%- endif -%}
+          {%- if settings.social_x != blank -%}<a href="{{ settings.social_x }}" aria-label="X" target="_blank" rel="noopener">{% render 'icon', name: 'x', size: 14 %}</a>{%- endif -%}
+          {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" aria-label="Facebook" target="_blank" rel="noopener">{% render 'icon', name: 'facebook', size: 16 %}</a>{%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'menu' -%}
+            <div class="footer__col" {{ block.shopify_attributes }}>
+              <h4>{{ block.settings.title }}</h4>
+              <ul>
+                {%- for link in linklists[block.settings.menu].links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- when 'newsletter' -%}
+            <div class="footer__col footer__newsletter" {{ block.shopify_attributes }}>
+              <h4>{{ block.settings.title }}</h4>
+              <p style="font-size:14px;">{{ block.settings.text }}</p>
+              {% form 'customer', class: 'footer__newsletter-form' %}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <input type="email" name="contact[email]" placeholder="Your email" required>
+                <button class="btn btn--primary btn--sm btn--full" type="submit">Subscribe</button>
+                {%- if form.posted_successfully? -%}
+                  <p style="font-size:13px; margin-top:8px; color:#9ce6b6;">Thanks for subscribing.</p>
+                {%- endif -%}
+              {% endform %}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
+      <span>{{ powered_by_link }}</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Premium wearable technology for health, fitness, recovery, and modern living."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Heading", "default": "Stay in the loop" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Health insights, product news, and exclusive offers." }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "menu", "settings": { "title": "Shop" } },
+      { "type": "menu", "settings": { "title": "Support" } },
+      { "type": "newsletter" }
+    ]
+  },
+  "enabled_on": { "groups": ["footer"] }
+}
+{% endschema %}

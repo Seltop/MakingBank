@@ -1,0 +1,57 @@
+<section>
+  <div class="page-hero container">
+    <h1>{{ section.settings.heading | default: 'How it works' }}</h1>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+
+  <div class="container" style="padding-bottom: 80px;">
+    <div class="tech-grid">
+      {%- for block in section.blocks -%}
+        <div class="tech-row" {{ block.shopify_attributes }}>
+          <div class="tech-row__media">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.image.alt | default: block.settings.title | escape }}" loading="lazy" width="1200" height="{{ 1200 | divided_by: block.settings.image.aspect_ratio | round }}">
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag }}
+            {%- endif -%}
+          </div>
+          <div>
+            <span class="tech-row__eyebrow">{{ block.settings.eyebrow }}</span>
+            <h2>{{ block.settings.title }}</h2>
+            <div class="rte text-muted">{{ block.settings.body }}</div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Technology",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The technology inside" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Medical-grade sensors. AI-driven insights. Years of research distilled into wearables you'll actually want to wear." }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Tech row",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Sensors" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Medical-grade biometric sensors" },
+        { "type": "richtext", "id": "body", "label": "Body", "default": "<p>PPG, EDA, accelerometer, gyroscope, skin temperature, and SpO2 — all in a wearable that weighs less than a penny.</p>" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "row", "settings": { "eyebrow": "Sensors", "title": "Medical-grade biometric sensors" } },
+      { "type": "row", "settings": { "eyebrow": "Algorithms", "title": "AI-driven health insights", "body": "<p>Machine learning models trained on millions of nights of sleep data deliver personalized recovery, sleep, and readiness scores.</p>" } },
+      { "type": "row", "settings": { "eyebrow": "Materials", "title": "Designed to be worn 24/7", "body": "<p>Aerospace-grade titanium, sapphire crystal, and skin-safe polymers. Light, durable, hypoallergenic.</p>" } },
+      { "type": "row", "settings": { "eyebrow": "Privacy", "title": "Your data, your control", "body": "<p>End-to-end encrypted. Never sold to advertisers. Delete anytime.</p>" } }
+    ]
+  }
+}
+{% endschema %}

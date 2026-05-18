@@ -1,0 +1,52 @@
+{%- liquid
+  assign collection_handle = section.settings.collection
+  assign coll = collections[collection_handle]
+  assign limit = section.settings.product_count | default: 8
+-%}
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-header__text">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+      </div>
+      {%- if coll != blank -%}
+        <a href="{{ coll.url }}" class="section-header__link">View all {% render 'icon', name: 'arrow-right', size: 14 %}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="product-grid">
+      {%- if coll.products.size > 0 -%}
+        {%- for product in coll.products limit: limit -%}
+          {% render 'product-card', product: product, show_vendor: section.settings.show_vendor %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <article class="product-card">
+            <div class="product-card__media-wrap">{{ 'product-' | append: i | placeholder_svg_tag }}</div>
+            <div class="product-card__info">
+              <h3 class="product-card__title">Example product {{ i }}</h3>
+              <span class="product-card__price">$199.00</span>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product grid",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Best Sellers" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What our community loves" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "product_count", "min": 4, "max": 16, "step": 4, "label": "Number of products", "default": 8 },
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false }
+  ],
+  "presets": [{ "name": "Product grid" }]
+}
+{% endschema %}

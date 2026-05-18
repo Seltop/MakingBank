@@ -1,0 +1,83 @@
+<section>
+  <div class="page-hero container">
+    <h1>{{ section.settings.heading | default: 'Reviews' }}</h1>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+
+  <div class="container" style="padding-bottom: 80px;">
+    <div style="max-width: 980px; margin: 0 auto;">
+      <div class="reviews-summary">
+        <div style="text-align: center;">
+          <div class="reviews-summary__big">{{ section.settings.average | default: '4.8' }}</div>
+          <div class="reviews-summary__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="text-muted" style="font-size: 13px;">Based on {{ section.settings.count | default: '12,847' }} reviews</div>
+        </div>
+        <div>
+          {%- assign distribution = section.settings.distribution | default: '78,15,4,2,1' | split: ',' -%}
+          {%- for pct in distribution -%}
+            {%- assign label = 5 | minus: forloop.index0 -%}
+            <div class="reviews-summary__bar">
+              <span>{{ label }} stars</span>
+              <span class="bar"><span style="width: {{ pct }}%;"></span></span>
+              <span>{{ pct }}%</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="reviews-grid">
+        {%- for block in section.blocks -%}
+          <div class="review-card" {{ block.shopify_attributes }}>
+            <div class="review-card__stars">
+              {%- for i in (1..5) -%}
+                {%- if i <= block.settings.rating -%}&#9733;{%- else -%}<span style="color:#E5E7EB;">&#9733;</span>{%- endif -%}
+              {%- endfor -%}
+            </div>
+            {%- if block.settings.title != blank -%}
+              <h4 style="margin: 0 0 8px;">{{ block.settings.title }}</h4>
+            {%- endif -%}
+            <p>"{{ block.settings.review }}"</p>
+            <div class="review-card__author">&mdash; {{ block.settings.author }}{% if block.settings.product != blank %} &middot; {{ block.settings.product }}{% endif %}{% if block.settings.verified %} &middot; Verified buyer{% endif %}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reviews page",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What our customers say" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Real reviews from Pulse members worldwide." },
+    { "type": "text", "id": "average", "label": "Average rating", "default": "4.8" },
+    { "type": "text", "id": "count", "label": "Review count", "default": "12,847" },
+    { "type": "text", "id": "distribution", "label": "Star distribution (5,4,3,2,1)", "default": "78,15,4,2,1" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Rating", "default": 5 },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "review", "label": "Review text" },
+        { "type": "text", "id": "author", "label": "Author" },
+        { "type": "text", "id": "product", "label": "Product" },
+        { "type": "checkbox", "id": "verified", "label": "Verified buyer", "default": true }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "review", "settings": { "rating": 5, "title": "Game changer", "review": "I've tried every wearable on the market. This is the first one I actually wear every day.", "author": "Sarah K.", "product": "Pulse Ring" } },
+      { "type": "review", "settings": { "rating": 5, "title": "Sleep score is eerily accurate", "review": "I can predict how I'll feel waking up based on the score the night before. The trends data is brilliant.", "author": "Daniel M.", "product": "Pulse Watch" } },
+      { "type": "review", "settings": { "rating": 4, "title": "Great hardware, growing app", "review": "Hardware is premium. App has improved a lot this year. Looking forward to seeing where they take it.", "author": "Aisha R.", "product": "Pulse Tracker" } },
+      { "type": "review", "settings": { "rating": 5, "title": "Worth every penny", "review": "Customer service was amazing too; they replaced my charger free under warranty within 3 days.", "author": "Tom B.", "product": "Pulse Ring" } },
+      { "type": "review", "settings": { "rating": 5, "title": "Lifestyle upgrade", "review": "Recovery score has changed how I train. I rest when it says rest, push when it says go.", "author": "Mei L.", "product": "Pulse Watch" } },
+      { "type": "review", "settings": { "rating": 5, "title": "Sleek and discreet", "review": "Nobody knows I'm wearing health tech. Looks like a regular ring but tracks more than my old smartwatch.", "author": "Jordan P.", "product": "Pulse Ring" } }
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,42 @@
+{
+  "sections": {
+    "hero-text": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "Our story",
+        "heading": "Built for the way you actually live",
+        "content": "<p>We started Pulse because every health wearable we tried felt like a compromise. Too bulky. Too techy. Too distracting. So we built something different — premium wearables that disappear on your wrist or finger and deliver insights that actually change behavior.</p>",
+        "alignment": "center"
+      }
+    },
+    "image-text-1": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Mission",
+        "heading": "Better data. Better days.",
+        "body": "<p>Continuous biometric tracking shouldn't require a clinic. We pack medical-grade sensors and the AI to make sense of them into wearables you'll forget you're wearing.</p>",
+        "image_position": "left"
+      }
+    },
+    "image-text-2": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Team",
+        "heading": "Engineers, athletes, and sleep scientists",
+        "body": "<p>Our team includes ex-Apple Watch engineers, Olympic coaches, and PhDs in chronobiology. We obsess over the details so you don't have to.</p>",
+        "image_position": "right"
+      }
+    },
+    "image-text-3": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Values",
+        "heading": "Your data belongs to you",
+        "body": "<p>Privacy isn't a feature. It's the foundation. End-to-end encrypted. Never sold. Always deletable.</p>",
+        "image_position": "left"
+      }
+    },
+    "final-cta": { "type": "final-cta" }
+  },
+  "order": ["hero-text", "image-text-1", "image-text-2", "image-text-3", "final-cta"]
+}

@@ -1,0 +1,97 @@
+<section>
+  <div class="page-hero container">
+    <h1>{{ section.settings.heading }}</h1>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+
+  <div class="container" style="padding-bottom: 80px;">
+    <div style="max-width: 820px; margin: 0 auto;">
+      <div class="rte">{{ section.settings.intro }}</div>
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'table' -%}
+            <h2 style="margin-top: 40px;">{{ block.settings.title }}</h2>
+            {%- if block.settings.description != blank -%}<p class="text-muted">{{ block.settings.description }}</p>{%- endif -%}
+            <table class="size-guide-table">
+              <thead>
+                <tr>
+                  {%- assign headers = block.settings.headers | split: ',' -%}
+                  {%- for h in headers -%}<th>{{ h | strip }}</th>{%- endfor -%}
+                </tr>
+              </thead>
+              <tbody>
+                {%- for i in (1..15) -%}
+                  {%- assign row_key = 'row_' | append: i -%}
+                  {%- assign row = block.settings[row_key] -%}
+                  {%- if row != blank -%}
+                    <tr>
+                      {%- assign cells = row | split: ',' -%}
+                      {%- for c in cells -%}<td>{{ c | strip }}</td>{%- endfor -%}
+                    </tr>
+                  {%- endif -%}
+                {%- endfor -%}
+              </tbody>
+            </table>
+          {%- when 'tip' -%}
+            <div style="margin: 24px 0; padding: 18px 20px; background: var(--color-surface); border-radius: var(--radius-md);">
+              <strong>{{ block.settings.title }}</strong>
+              <div class="rte" style="margin-top: 6px;">{{ block.settings.content }}</div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Size guide",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Size guide" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Find your perfect fit" },
+    { "type": "richtext", "id": "intro", "label": "Intro text", "default": "<p>The right fit is essential for accurate health tracking. Use the charts below to find your size — or request a free sizing kit when you order a ring.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "table",
+      "name": "Size table",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Ring sizes" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Measure circumference at your widest knuckle." },
+        { "type": "text", "id": "headers", "label": "Headers (comma-separated)", "default": "US Size, Diameter (mm), Circumference (mm)" },
+        { "type": "text", "id": "row_1", "label": "Row 1", "default": "6, 16.5, 51.9" },
+        { "type": "text", "id": "row_2", "label": "Row 2", "default": "7, 17.3, 54.4" },
+        { "type": "text", "id": "row_3", "label": "Row 3", "default": "8, 18.2, 57.0" },
+        { "type": "text", "id": "row_4", "label": "Row 4", "default": "9, 19.0, 59.5" },
+        { "type": "text", "id": "row_5", "label": "Row 5", "default": "10, 19.8, 62.1" },
+        { "type": "text", "id": "row_6", "label": "Row 6", "default": "11, 20.6, 64.6" },
+        { "type": "text", "id": "row_7", "label": "Row 7", "default": "12, 21.4, 67.2" },
+        { "type": "text", "id": "row_8", "label": "Row 8", "default": "13, 22.2, 69.7" },
+        { "type": "text", "id": "row_9", "label": "Row 9" },
+        { "type": "text", "id": "row_10", "label": "Row 10" },
+        { "type": "text", "id": "row_11", "label": "Row 11" },
+        { "type": "text", "id": "row_12", "label": "Row 12" },
+        { "type": "text", "id": "row_13", "label": "Row 13" },
+        { "type": "text", "id": "row_14", "label": "Row 14" },
+        { "type": "text", "id": "row_15", "label": "Row 15" }
+      ]
+    },
+    {
+      "type": "tip",
+      "name": "Sizing tip",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Pro tip" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Measure your finger at the end of the day when it's at its largest. If you're between sizes, choose the larger one.</p>" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "table", "settings": { "title": "Ring sizes" } },
+      { "type": "tip", "settings": { "title": "Order a free sizing kit" } },
+      { "type": "table", "settings": { "title": "Watch strap sizes", "description": "Measure your wrist circumference.", "headers": "Size, Wrist (mm), Wrist (in)", "row_1": "S, 130-155, 5.1-6.1", "row_2": "M, 150-180, 5.9-7.1", "row_3": "L, 175-210, 6.9-8.3" } }
+    ]
+  }
+}
+{% endschema %}

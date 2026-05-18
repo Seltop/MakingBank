@@ -1,0 +1,76 @@
+{%- paginate collection.products by section.settings.per_page -%}
+<div class="container collection-hero">
+  <h1>{{ collection.title }}</h1>
+  {%- if collection.description != blank -%}
+    <p>{{ collection.description }}</p>
+  {%- endif -%}
+</div>
+
+<div class="container">
+  <div class="collection-toolbar">
+    <span class="collection-toolbar__count">{{ collection.products_count }} products</span>
+
+    <div class="collection-toolbar__actions">
+      <button type="button" class="btn btn--outline btn--sm filter-toggle" data-drawer-open="FilterDrawer">
+        Filter
+      </button>
+      <select data-collection-sort aria-label="Sort by">
+        {%- assign sort_options = 'manual,best-selling,title-ascending,price-ascending,price-descending,created-descending' | split: ',' -%}
+        {%- assign sort_labels = 'Featured,Best selling,A–Z,Price: low to high,Price: high to low,Newest' | split: ',' -%}
+        {%- for opt in sort_options -%}
+          <option value="{{ opt }}" {% if collection.sort_by == opt or collection.default_sort_by == opt and collection.sort_by == blank %}selected{% endif %}>{{ sort_labels[forloop.index0] }}</option>
+        {%- endfor -%}
+      </select>
+    </div>
+  </div>
+
+  <div class="collection-layout">
+    <aside class="filters is-sidebar" role="complementary" aria-label="Filters">
+      {% render 'collection-filters', collection: collection %}
+    </aside>
+
+    <div>
+      {%- if collection.products.size > 0 -%}
+        <div class="product-grid">
+          {%- for product in collection.products -%}
+            {% render 'product-card', product: product %}
+          {%- endfor -%}
+        </div>
+        {% render 'pagination', paginate: paginate %}
+      {%- else -%}
+        <div style="padding: 60px 0; text-align:center;">
+          <p class="text-muted">No products match your filters.</p>
+          <a href="{{ collection.url }}" class="btn btn--outline">Clear filters</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- comment -%} Mobile filter drawer {%- endcomment -%}
+<div class="filter-drawer" id="FilterDrawer" role="dialog" aria-modal="true" aria-label="Filters">
+  <div class="filter-drawer__overlay"></div>
+  <div class="filter-drawer__panel">
+    <div class="filter-drawer__header">
+      <strong>Filter</strong>
+      <button class="header__icon-btn" data-drawer-close aria-label="Close filters">{% render 'icon', name: 'close', size: 22 %}</button>
+    </div>
+    <div class="filter-drawer__body">
+      {% render 'collection-filters', collection: collection %}
+    </div>
+    <div class="filter-drawer__footer">
+      <a href="{{ collection.url }}" class="btn btn--outline" style="flex:1">Clear</a>
+      <button class="btn btn--primary" data-drawer-close style="flex:1">Show results</button>
+    </div>
+  </div>
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "range", "id": "per_page", "min": 12, "max": 48, "step": 4, "label": "Products per page", "default": 24 }
+  ]
+}
+{% endschema %}

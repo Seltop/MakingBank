@@ -1,0 +1,29 @@
+<section class="section">
+  <div class="container">
+    <h1>Account</h1>
+    <p>Welcome back, {{ customer.first_name | default: customer.email }}.</p>
+    <div style="display:grid; grid-template-columns: 1fr; gap: 32px; margin-top: 32px;">
+      <div>
+        <h3>Recent orders</h3>
+        {%- if customer.orders.size > 0 -%}
+          <table class="cart-table">
+            <thead><tr><th>Order</th><th>Date</th><th>Total</th><th>Status</th></tr></thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: '%b %d, %Y' }}</td>
+                  <td>{{ order.total_price | money }}</td>
+                  <td>{{ order.financial_status }} / {{ order.fulfillment_status | default: 'unfulfilled' }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        {%- else -%}
+          <p class="text-muted">No orders yet.</p>
+        {%- endif -%}
+      </div>
+      <p><a href="{{ routes.account_logout_url }}">Log out</a></p>
+    </div>
+  </div>
+</section>

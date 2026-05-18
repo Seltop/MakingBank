@@ -1,0 +1,20 @@
+{%- comment -%}
+  Renders Sale / New / Best Seller badges based on product tags + sale state.
+  Accepts: product (object)
+{%- endcomment -%}
+{%- liquid
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+  assign tag_list = product.tags | join: ','
+-%}
+
+<div class="product-card__badges">
+  {%- if on_sale -%}<span class="badge badge--sale">Sale</span>{%- endif -%}
+  {%- if tag_list contains 'new' or tag_list contains 'New' -%}<span class="badge badge--new">New</span>{%- endif -%}
+  {%- if tag_list contains 'best-seller' or tag_list contains 'Best Seller' or tag_list contains 'best seller' -%}
+    <span class="badge badge--best">Best Seller</span>
+  {%- endif -%}
+  {%- unless product.available -%}<span class="badge">Sold out</span>{%- endunless -%}
+</div>

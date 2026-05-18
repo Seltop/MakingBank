@@ -1,0 +1,95 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_text": "Skip to content",
+      "close": "Close",
+      "open_menu": "Open menu",
+      "open_cart": "Open cart",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "search": {
+      "search": "Search",
+      "placeholder": "Search products...",
+      "no_results": "No results found"
+    },
+    "newsletter_form": {
+      "newsletter_email": "Email",
+      "confirmation": "Thanks for subscribing"
+    },
+    "social": {
+      "follow_us": "Follow us"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you were looking for does not exist.",
+      "link": "Continue shopping"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "adding": "Adding...",
+      "added": "Added",
+      "buy_now": "Buy now",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "decrease_quantity": "Decrease quantity",
+      "increase_quantity": "Increase quantity",
+      "from": "From",
+      "on_sale": "Sale",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "description": "Description",
+      "specs": "Specs",
+      "features": "Features",
+      "in_the_box": "In the box",
+      "shipping_returns": "Shipping & returns",
+      "size_guide": "Size guide",
+      "view_details": "View details",
+      "reviews": "Reviews",
+      "based_on": "Based on {{ count }} reviews"
+    }
+  },
+  "collections": {
+    "general": {
+      "filter": "Filter",
+      "filter_and_sort": "Filter & sort",
+      "sort_by": "Sort by",
+      "clear_all": "Clear all",
+      "apply": "Apply",
+      "showing": "Showing {{ count }} of {{ total }}",
+      "no_products": "No products match your filters"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue shopping",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "remove": "Remove",
+      "note": "Order notes",
+      "taxes_shipping": "Taxes and shipping calculated at checkout"
+    }
+  },
+  "blogs": {
+    "article": {
+      "read_more": "Read more",
+      "back_to_blog": "Back to blog"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "submit": "Send message",
+      "success": "Thanks! We'll be in touch soon.",
+      "error": "Please correct the following:"
+    }
+  }
+}

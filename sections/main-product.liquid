@@ -1,0 +1,285 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign is_ring = false
+  assign tags = product.tags | join: ',' | downcase
+  if tags contains 'ring' or product.type contains 'Ring'
+    assign is_ring = true
+  endif
+-%}
+
+<section class="product">
+  <div class="container">
+    <div class="product__wrap">
+      {%- comment -%} ---------- Gallery ---------- {%- endcomment -%}
+      <div class="product__gallery" data-gallery>
+        <div class="product__gallery-main" data-gallery-main>
+          {%- if product.featured_media -%}
+            <img src="{{ product.featured_media | image_url: width: 1400 }}" alt="{{ product.featured_media.alt | default: product.title | escape }}" width="1400" height="{{ 1400 | divided_by: product.featured_media.aspect_ratio | round }}">
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="product__thumbs">
+            {%- for media in product.media -%}
+              <button type="button"
+                class="product__thumb {% if forloop.first %}is-active{% endif %}"
+                data-gallery-thumb
+                data-src="{{ media | image_url: width: 1400 }}"
+                data-alt="{{ media.alt | default: product.title | escape }}"
+                aria-label="View image {{ forloop.index }}">
+                <img src="{{ media | image_url: width: 200 }}" alt="" loading="lazy" width="200" height="{{ 200 | divided_by: media.aspect_ratio | round }}">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ---------- Info / Form ---------- {%- endcomment -%}
+      <div class="product__details">
+        {%- if product.vendor != blank -%}
+          <span class="product__vendor">{{ product.vendor }}</span>
+        {%- endif -%}
+        <h1 class="product__title">{{ product.title }}</h1>
+
+        <div class="product__rating">
+          <span class="stars">★★★★★</span>
+          <span>4.8 · 1,247 reviews</span>
+        </div>
+
+        <div class="product__price">
+          <span data-product-price>{{ current_variant.price | money }}</span>
+          <span class="price--compare" data-product-compare {% unless current_variant.compare_at_price > current_variant.price %}style="display:none"{% endunless %}>
+            {{ current_variant.compare_at_price | money }}
+          </span>
+        </div>
+
+        {%- if product.description != blank -%}
+          <div class="product__desc">{{ product.description | strip_html | truncatewords: 50 }}</div>
+        {%- endif -%}
+
+        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-variant-form novalidate>
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+          <script type="application/json" data-product-json>{{ product | json }}</script>
+
+          {%- if product.has_only_default_variant == false -%}
+            <div class="product__variants">
+              {%- for option in product.options_with_values -%}
+                {%- assign opt_name = option.name | downcase -%}
+                {%- assign is_color = false -%}
+                {%- if opt_name contains 'color' or opt_name contains 'colour' -%}{%- assign is_color = true -%}{%- endif -%}
+
+                <div class="variant-group" data-option-index="{{ forloop.index0 }}">
+                  <div class="variant-group__label">
+                    <span>{{ option.name }}: <strong data-option-display>{{ option.selected_value }}</strong></span>
+                    {%- if is_ring and opt_name contains 'size' -%}
+                      <a href="{{ pages['size-guide'].url | default: '/pages/size-guide' }}">Size guide</a>
+                    {%- endif -%}
+                  </div>
+                  <div class="variant-options">
+                    {%- for value in option.values -%}
+                      <button type="button"
+                        class="variant-option{% if is_color %} variant-option--swatch{% endif %}{% if value == option.selected_value %} is-selected{% endif %}"
+                        data-value="{{ value | escape }}"
+                        {% if is_color %}style="background:{{ value | downcase | split: ' ' | first | replace: 'rose', '#f7c1c1' | replace: 'silver', '#c0c4c9' | replace: 'gold', '#d4af37' | replace: 'black', '#0b1220' | replace: 'white', '#ffffff' | replace: 'graphite', '#3a3f45' | replace: 'midnight', '#0e1730' | replace: 'stealth', '#1a1a1a' | replace: 'champagne', '#e6c8a0' }};" aria-label="{{ value | escape }}"{% else %}aria-label="{{ option.name }}: {{ value | escape }}"{% endif %}>
+                        {%- unless is_color -%}{{ value }}{%- endunless -%}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          <div class="product__actions">
+            <div class="quantity">
+              <button type="button" data-qty-change="-1" aria-label="Decrease">−</button>
+              <input type="number" name="quantity" value="1" min="1" aria-label="Quantity">
+              <button type="button" data-qty-change="1" aria-label="Increase">+</button>
+            </div>
+            <button type="submit"
+              class="btn btn--primary btn--lg"
+              data-add-to-cart
+              data-default-text="Add to cart"
+              {% unless current_variant.available %}disabled{% endunless %}>
+              {% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}
+            </button>
+          </div>
+
+          {%- if section.settings.show_buy_now -%}
+            <button type="submit"
+              name="checkout"
+              class="btn btn--secondary btn--lg btn--full product__buy-now"
+              data-buy-now
+              formaction="/checkout"
+              {% unless current_variant.available %}disabled{% endunless %}>
+              Buy it now
+            </button>
+          {%- endif -%}
+        </form>
+
+        {%- comment -%} Feature icon row {%- endcomment -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="product__features">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'feature' -%}
+                <div class="product__feature" {{ block.shopify_attributes }}>
+                  {% render 'icon', name: block.settings.icon, size: 22 %}
+                  <strong>{{ block.settings.title }}</strong>
+                  <span>{{ block.settings.text }}</span>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div class="product__trust">
+          <div>{% render 'icon', name: 'truck', size: 18 %} Free shipping over $99</div>
+          <div>{% render 'icon', name: 'refresh', size: 18 %} 30-day returns</div>
+          <div>{% render 'icon', name: 'shield', size: 18 %} 2-year warranty</div>
+        </div>
+
+        {%- comment -%} Accordion blocks {%- endcomment -%}
+        <div class="accordion">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'description' -%}
+                <details {{ block.shopify_attributes }} open>
+                  <summary>Description {% render 'icon', name: 'plus', size: 18 %}</summary>
+                  <div class="accordion__content">{{ product.description }}</div>
+                </details>
+              {%- when 'specs' -%}
+                <details {{ block.shopify_attributes }}>
+                  <summary>{{ block.settings.title }} {% render 'icon', name: 'plus', size: 18 %}</summary>
+                  <div class="accordion__content">
+                    <table class="specs-table">
+                      {%- for spec in (1..10) -%}
+                        {%- assign label_key = 'spec_' | append: spec | append: '_label' -%}
+                        {%- assign value_key = 'spec_' | append: spec | append: '_value' -%}
+                        {%- assign label = block.settings[label_key] -%}
+                        {%- assign value = block.settings[value_key] -%}
+                        {%- if label != blank -%}
+                          <tr><td>{{ label }}</td><td>{{ value }}</td></tr>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </table>
+                  </div>
+                </details>
+              {%- when 'in_the_box' -%}
+                <details {{ block.shopify_attributes }}>
+                  <summary>{{ block.settings.title }} {% render 'icon', name: 'plus', size: 18 %}</summary>
+                  <div class="accordion__content">{{ block.settings.content }}</div>
+                </details>
+              {%- when 'shipping' -%}
+                <details {{ block.shopify_attributes }}>
+                  <summary>{{ block.settings.title }} {% render 'icon', name: 'plus', size: 18 %}</summary>
+                  <div class="accordion__content">{{ block.settings.content }}</div>
+                </details>
+              {%- when 'custom' -%}
+                <details {{ block.shopify_attributes }}>
+                  <summary>{{ block.settings.title }} {% render 'icon', name: 'plus', size: 18 %}</summary>
+                  <div class="accordion__content">{{ block.settings.content }}</div>
+                </details>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "checkbox", "id": "show_buy_now", "label": "Show Buy it now button", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature icon",
+      "limit": 8,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "pulse", "label": "Pulse" }, { "value": "sleep", "label": "Sleep" },
+            { "value": "activity", "label": "Activity" }, { "value": "battery", "label": "Battery" },
+            { "value": "water", "label": "Water" }, { "value": "shield", "label": "Shield" },
+            { "value": "bluetooth", "label": "Bluetooth" }, { "value": "recovery", "label": "Recovery" }
+          ],
+          "default": "pulse"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "7-day battery" },
+        { "type": "text", "id": "text", "label": "Subtext", "default": "Lasts a full week" }
+      ]
+    },
+    { "type": "description", "name": "Description", "limit": 1, "settings": [] },
+    {
+      "type": "specs",
+      "name": "Specs",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Specs" },
+        { "type": "text", "id": "spec_1_label", "label": "Spec 1 label", "default": "Battery life" },
+        { "type": "text", "id": "spec_1_value", "label": "Spec 1 value", "default": "7 days" },
+        { "type": "text", "id": "spec_2_label", "label": "Spec 2 label", "default": "Water rating" },
+        { "type": "text", "id": "spec_2_value", "label": "Spec 2 value", "default": "10 ATM" },
+        { "type": "text", "id": "spec_3_label", "label": "Spec 3 label", "default": "Sensors" },
+        { "type": "text", "id": "spec_3_value", "label": "Spec 3 value", "default": "HR, HRV, SpO2, temp" },
+        { "type": "text", "id": "spec_4_label", "label": "Spec 4 label", "default": "Connectivity" },
+        { "type": "text", "id": "spec_4_value", "label": "Spec 4 value", "default": "Bluetooth 5.3" },
+        { "type": "text", "id": "spec_5_label", "label": "Spec 5 label", "default": "Materials" },
+        { "type": "text", "id": "spec_5_value", "label": "Spec 5 value", "default": "Titanium, sapphire glass" },
+        { "type": "text", "id": "spec_6_label", "label": "Spec 6 label", "default": "Weight" },
+        { "type": "text", "id": "spec_6_value", "label": "Spec 6 value", "default": "4-6g" },
+        { "type": "text", "id": "spec_7_label", "label": "Spec 7 label" },
+        { "type": "text", "id": "spec_7_value", "label": "Spec 7 value" },
+        { "type": "text", "id": "spec_8_label", "label": "Spec 8 label" },
+        { "type": "text", "id": "spec_8_value", "label": "Spec 8 value" },
+        { "type": "text", "id": "spec_9_label", "label": "Spec 9 label" },
+        { "type": "text", "id": "spec_9_value", "label": "Spec 9 value" },
+        { "type": "text", "id": "spec_10_label", "label": "Spec 10 label" },
+        { "type": "text", "id": "spec_10_value", "label": "Spec 10 value" }
+      ]
+    },
+    {
+      "type": "in_the_box",
+      "name": "In the box",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "In the box" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<ul><li>Pulse wearable</li><li>Wireless charger</li><li>USB-C cable</li><li>Sizing kit</li><li>Quick start guide</li></ul>" }
+      ]
+    },
+    {
+      "type": "shipping",
+      "name": "Shipping & returns",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Shipping & returns" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Free shipping on orders over $99. Ships in 2-3 business days. 30-day risk-free returns.</p>" }
+      ]
+    },
+    {
+      "type": "custom",
+      "name": "Custom",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Care & maintenance" },
+        { "type": "richtext", "id": "content", "label": "Content" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "feature", "settings": { "icon": "battery", "title": "7 days", "text": "Battery" } },
+      { "type": "feature", "settings": { "icon": "water", "title": "10 ATM", "text": "Waterproof" } },
+      { "type": "feature", "settings": { "icon": "pulse", "title": "24/7", "text": "Heart rate" } },
+      { "type": "feature", "settings": { "icon": "sleep", "title": "Smart", "text": "Sleep tracking" } },
+      { "type": "description" },
+      { "type": "specs" },
+      { "type": "in_the_box" },
+      { "type": "shipping" }
+    ]
+  }
+}
+{% endschema %}

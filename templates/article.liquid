@@ -1,0 +1,48 @@
+<section class="section">
+  <div class="container">
+    <article style="max-width: 760px; margin: 0 auto;">
+      <a href="{{ blog.url }}" class="text-muted" style="font-size: 13px;">&larr; Back to {{ blog.title }}</a>
+      <h1 style="margin-top: 12px;">{{ article.title }}</h1>
+      <div class="text-muted" style="margin-bottom: 24px; font-size: 14px;">
+        {{ article.published_at | date: '%B %d, %Y' }}
+        {%- if article.author != blank %} · By {{ article.author }}{%- endif %}
+      </div>
+
+      {%- if article.image -%}
+        <img src="{{ article.image | image_url: width: 1400 }}" alt="{{ article.title }}" width="1400" height="{{ 1400 | divided_by: article.image.aspect_ratio | round }}" style="border-radius: var(--radius-lg); margin-bottom: 32px;" loading="eager">
+      {%- endif -%}
+
+      <div class="page-content rte" style="padding: 0;">{{ article.content }}</div>
+
+      {%- if article.tags.size > 0 -%}
+        <div style="margin-top: 32px; display: flex; gap: 6px; flex-wrap: wrap;">
+          {%- for tag in article.tags -%}
+            <span class="badge">{{ tag }}</span>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </article>
+
+    {%- if blog.comments_enabled? -%}
+      <div style="max-width: 760px; margin: 60px auto 0;">
+        <h3>Comments</h3>
+        {%- for comment in article.comments -%}
+          <div style="border-bottom: 1px solid var(--color-border); padding: 16px 0;">
+            <strong>{{ comment.author }}</strong>
+            <span class="text-muted" style="font-size: 13px;"> · {{ comment.created_at | date: '%b %d, %Y' }}</span>
+            <div>{{ comment.content }}</div>
+          </div>
+        {%- endfor -%}
+
+        {% form 'new_comment', article %}
+          <div class="form-row">
+            <div class="form-field"><label>Name</label><input type="text" name="comment[author]" required></div>
+            <div class="form-field"><label>Email</label><input type="email" name="comment[email]" required></div>
+          </div>
+          <div class="form-field"><label>Comment</label><textarea name="comment[body]" rows="4" required></textarea></div>
+          <button type="submit" class="btn btn--primary">Post comment</button>
+        {% endform %}
+      </div>
+    {%- endif -%}
+  </div>
+</section>

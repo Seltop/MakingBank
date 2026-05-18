@@ -1,0 +1,42 @@
+{
+  "sections": {
+    "hero": { "type": "hero" },
+    "featured-collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "rings": { "type": "collection", "settings": { "title": "Smart Rings" } },
+        "watches": { "type": "collection", "settings": { "title": "Smart Watches" } },
+        "trackers": { "type": "collection", "settings": { "title": "Fitness Trackers" } },
+        "accessories": { "type": "collection", "settings": { "title": "Accessories" } }
+      },
+      "block_order": ["rings", "watches", "trackers", "accessories"]
+    },
+    "best-sellers": {
+      "type": "best-sellers",
+      "settings": { "eyebrow": "Best Sellers", "heading": "Most-loved wearables", "product_count": 8 }
+    },
+    "track-health": { "type": "track-health" },
+    "benefits": { "type": "benefits" },
+    "comparison": { "type": "comparison" },
+    "app-connectivity": { "type": "app-connectivity" },
+    "lifestyle-image": { "type": "lifestyle-image" },
+    "customer-reviews": { "type": "customer-reviews" },
+    "trust-badges": { "type": "trust-badges" },
+    "faq-preview": { "type": "faq-preview" },
+    "final-cta": { "type": "final-cta" }
+  },
+  "order": [
+    "hero",
+    "featured-collections",
+    "best-sellers",
+    "track-health",
+    "benefits",
+    "comparison",
+    "app-connectivity",
+    "lifestyle-image",
+    "customer-reviews",
+    "trust-badges",
+    "faq-preview",
+    "final-cta"
+  ]
+}

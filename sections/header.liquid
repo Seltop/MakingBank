@@ -1,0 +1,71 @@
+{%- liquid
+  assign menu = section.settings.menu
+-%}
+
+<header class="header" role="banner">
+  <div class="container header__inner">
+    <button type="button" class="header__icon-btn header__menu-toggle" data-drawer-open="MobileNav" aria-label="Open menu">
+      {% render 'icon', name: 'menu', size: 22 %}
+    </button>
+
+    <nav class="header__nav" aria-label="Primary">
+      {%- for link in linklists[menu].links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ shop.name }}">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}" width="400" height="{{ 400 | divided_by: settings.logo.aspect_ratio | round }}" style="max-width: {{ settings.logo_width }}px; width: 100%;" loading="eager">
+      {%- else -%}
+        <span class="header__logo-text">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    <div class="header__actions">
+      <a href="{{ routes.search_url }}" class="header__icon-btn" aria-label="Search">
+        {% render 'icon', name: 'search', size: 20 %}
+      </a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="header__icon-btn" aria-label="Account">
+          {% render 'icon', name: 'user', size: 20 %}
+        </a>
+      {%- endif -%}
+      <button type="button" class="header__icon-btn" data-drawer-open="CartDrawer" aria-label="Open cart">
+        {% render 'icon', name: 'cart', size: 20 %}
+        <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}style="display:none"{% endif %}>{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+{%- comment -%} Mobile nav drawer {%- endcomment -%}
+<div class="mobile-nav" id="MobileNav" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="mobile-nav__overlay"></div>
+  <div class="mobile-nav__panel">
+    <div class="mobile-nav__header">
+      <span class="header__logo-text">{{ shop.name }}</span>
+      <button class="header__icon-btn" data-drawer-close aria-label="Close menu">{% render 'icon', name: 'close', size: 22 %}</button>
+    </div>
+    <ul class="mobile-nav__list">
+      {%- for link in linklists[menu].links -%}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

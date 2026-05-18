@@ -1,0 +1,62 @@
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-header" style="justify-content: center;">
+      <div class="section-header__text" style="text-align:center; margin: 0 auto;">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+      </div>
+    </div>
+
+    <div class="faq">
+      {%- for block in section.blocks -%}
+        <details class="faq__item" {{ block.shopify_attributes }} {% if forloop.first %}open{% endif %}>
+          <summary class="faq__question">
+            {{ block.settings.question }}
+            {% render 'icon', name: 'plus', size: 18 %}
+          </summary>
+          <div class="faq__answer">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <div class="text-center" style="margin-top: 32px;">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--outline">{{ section.settings.cta_text }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FAQ" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Questions, answered" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" },
+    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "See all FAQs" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How accurate is the sleep tracking?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Our wearables use a combination of accelerometer, heart rate, HRV, and skin temperature data to detect sleep stages with >90% accuracy compared to polysomnography.</p>" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "faq", "settings": { "question": "How accurate is sleep tracking?" } },
+      { "type": "faq", "settings": { "question": "Does it work with iPhone and Android?", "answer": "<p>Yes, our app is available on iOS 14+ and Android 9+.</p>" } },
+      { "type": "faq", "settings": { "question": "How long is the battery life?", "answer": "<p>Ring: 7 days. Watch: 2 days with always-on display. Tracker: 10 days.</p>" } },
+      { "type": "faq", "settings": { "question": "Is it waterproof?", "answer": "<p>All Pulse wearables are rated 10 ATM (100m) — swim, shower, and snorkel safe.</p>" } },
+      { "type": "faq", "settings": { "question": "What's the return policy?", "answer": "<p>30-day risk-free trial. If you're not happy, return for a full refund.</p>" } }
+    ]
+  },
+  "presets": [{ "name": "FAQ" }]
+}
+{% endschema %}

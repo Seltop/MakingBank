@@ -1,0 +1,20 @@
+<section class="section">
+  <div class="container">
+    <a href="{{ routes.account_url }}" class="text-muted" style="font-size: 13px;">&larr; Account</a>
+    <h1 style="margin-top: 12px;">Order {{ order.name }}</h1>
+    <p class="text-muted">Placed on {{ order.created_at | date: '%B %d, %Y' }}</p>
+    <table class="cart-table" style="margin-top: 24px;">
+      <thead><tr><th>Product</th><th>Qty</th><th>Total</th></tr></thead>
+      <tbody>
+        {%- for line in order.line_items -%}
+          <tr>
+            <td><a href="{{ line.product.url }}">{{ line.title }}</a></td>
+            <td>{{ line.quantity }}</td>
+            <td>{{ line.final_line_price | money }}</td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+    <p style="margin-top: 16px;"><strong>Total:</strong> {{ order.total_price | money }}</p>
+  </div>
+</section>
