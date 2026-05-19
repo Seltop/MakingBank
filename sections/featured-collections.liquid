@@ -22,7 +22,8 @@
         {%- assign fallback_img = default_finishes[idx] -%}
         {%- assign fallback_label = default_labels[idx] | default: block.settings.title -%}
         {%- assign fallback_sub = default_subtitles[idx] -%}
-        <a href="{{ coll.url | default: '#' }}" class="finish-card" {{ block.shopify_attributes }}>
+        {%- assign card_url = block.settings.url | default: coll.url | default: routes.collections_url -%}
+        <a href="{{ card_url }}" class="finish-card" {{ block.shopify_attributes }}>
           <div class="finish-card__media">
             {%- if block.settings.image != blank -%}
               <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title | default: coll.title }}" loading="lazy" width="800" height="{{ 800 | divided_by: block.settings.image.aspect_ratio | round }}">
@@ -62,6 +63,7 @@
       "name": "Collection card",
       "settings": [
         { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "url", "id": "url", "label": "Card link", "info": "Overrides the collection link. Use this to point a finish card at a product, page, or external URL." },
         { "type": "image_picker", "id": "image", "label": "Override image" },
         { "type": "text", "id": "title", "label": "Override title" }
       ]
