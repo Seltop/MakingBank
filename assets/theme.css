@@ -397,20 +397,6 @@ strong, b { font-weight: 600; }
   opacity: 0.9;
   mix-blend-mode: overlay;
 }
-.hero__visual::before {
-  content: '';
-  position: absolute;
-  right: clamp(20px, 7vw, 120px);
-  bottom: clamp(20px, 7vw, 90px);
-  width: min(50vw, 660px);
-  aspect-ratio: 1.35;
-  border-radius: var(--radius-xl);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
-  transform: rotate(-5deg);
-  backdrop-filter: blur(2px);
-}
-
 /* Hero ring composition (real product photos) ------------- */
 .hero__ring-stage {
   position: absolute;
@@ -502,9 +488,6 @@ strong, b { font-weight: 600; }
   pointer-events: none;
   z-index: 1;
 }
-
-/* Hide the decorative rotated card when ring stage is present */
-.hero__visual:has(.hero__ring-stage)::before { display: none; }
 
 /* Hero outline CTA override (light on dark) ------------- */
 .hero__cta-outline {
@@ -647,7 +630,6 @@ strong, b { font-weight: 600; }
 @media (max-width: 820px) {
   .hero { align-items: flex-end; }
   .hero__visual { opacity: 0.7; }
-  .hero__visual::before { right: -12vw; bottom: 22%; width: 86vw; }
   .hero__watch { right: 14vw; bottom: 28%; width: 150px; }
   .hero__ring { right: 4vw; bottom: 48%; width: 118px; }
   .hero__tracker { right: 66vw; bottom: 26%; width: 64px; }
